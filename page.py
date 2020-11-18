@@ -1,7 +1,4 @@
-import time
-
 from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
 
@@ -19,5 +16,6 @@ class PageObject:
 class IMDBMainPage(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
+
 
         pass
