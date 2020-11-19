@@ -1,3 +1,4 @@
+import page
 import time
 import unittest
 
@@ -47,7 +48,7 @@ class IMDBTest(unittest.TestCase):
         self.driver.close()
 
 
-class test_IMBD_Nav(unittest.TestCase):
+class foo_test_IMBD_Nav(unittest.TestCase):
     base_url = "https://www.imdb.com"
 
     def __init__(self, methodName: str = ...):
@@ -58,10 +59,34 @@ class test_IMBD_Nav(unittest.TestCase):
         self.driver = webdriver_chrome()
         self.driver.get("https://www.imdb.com")
 
-    def test_page_access(self):
+    def foo_test_page_access(self):
         main_page = self.driver.get("https://imdb.com")
 
-        pass
+    def tearDown(self):
+        self.driver.close()
+
+
+class test_imdb_menu(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver_chrome()
+        self.driver.get("https://www.imdb.com")
+#        page.IMDBMainPage(self.driver).accept_cookies()
+
+    def test_click_menu(self):
+        main_page = page.IMDBMainPage(self.driver)
+        main_page.click_menu_dd()
+        time.sleep(5)
+
+    def test_menu_awards(self):
+        main_page = page.IMDB_menu_awards(self.driver)
+        main_page.click_oscars()
+        self.assertEqual(self.driver.find_element_by_xpath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div["
+                                                           "3]/span/label").text, "Awards & Events", msg="Wrong Page")
+        time.sleep(10)
+
+    def tearDown(self):
+        self.driver.close()
 
 
 if __name__ == '__main__':
