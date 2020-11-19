@@ -3,7 +3,6 @@ import selenium
 from selenium import webdriver
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import time
 import unittest
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -12,13 +11,15 @@ from selenium.webdriver.support.events import EventFiringWebDriver
 from selenium.webdriver.support.events import AbstractEventListener
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.firefox.options import Options
-from time import time
+import time
 from datetime import datetime
 import page
 import HtmlTestRunner
+from selenium.webdriver.support.ui import Select
 import getpass
 
-WEBDRIVER = "FIREFOX"
+
+WEBDRIVER = "CHROME"
 
 
 def webdriver_chrome():
@@ -89,13 +90,10 @@ class ScreenshotListener(AbstractEventListener):
         driver.get_screenshot_as_file(self.base_name + self.tmn + self.now + ".png")
 
 
-class KYHPageObject(unittest.TestCase):
-    targetURL = "https://kyh.se/utbildningar/teknisk-testare/"
-    targetURL2 = "https://kyh.se/om-oss/vad-ar-yh-utbildning/"
-    targetURL3 = "https://kyh.se/ledigajobb/"
-    targetURL4 = "https://kyh.se/inspiration/panelsamtal2019/"
-    targetURL5 = "https://apply.yh-antagning.se/Application/"
+class IMDBCelebsTVShows(unittest.TestCase):
 
+    targetURL6 = "https://www.imdb.com/search/name/?birth_monthday=11-19&ref_=nv_cel_brn"
+    targetURL7 = "https://www.imdb.com/search/name/?gender=male%2Cfemale&ref_=nv_cel_m"
     def setUp(self):
         self.driver = webdriver_factory()
         print("4")
@@ -103,81 +101,116 @@ class KYHPageObject(unittest.TestCase):
         print("5")
         self.driver = EventFiringWebDriver(self.driver, self.listener)
         print("6")
-        self.driver.get("https://www.kyh.se")
+        self.driver.get("https://www.imdb.com/?ref_=nv_home")
         print("7")
 
 
-    """def test_nav_through_dropdown_with_page_object(self):
-        main_page = page.KYHMainPage(self.driver)
-        self.listener.get_test_method_name("_nav_through_dd")
-        main_page.click_vara_utbildningar_dd()
-        main_page.click_it_in_dd()
-        vara_utbildningar = page.VaraUtbildningar(self.driver)
-        vara_utbildningar.click_goteborg()
-        vara_utbildningar.click_page_down()
-        vara_utbildningar.click_pvt()
-        self.assertEqual(self.driver.current_url, KYHPageObject.targetURL, msg="URL doesn't match")"""
+    @print_name
+    def test_celebs_born_today(self):
+        main_page = page.CelebsBornToday(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_celebs_born_today", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        time.sleep(5)
+        main_page.click_born_today()
+        self.assertTrue(self.driver.current_url, IMDBCelebsTVShows.targetURL6)
 
     @print_name
-    def test_om_kyh_om_oss(self):
-        main_page = page.OmKyh(self.driver)
-        self.listener.get_test_method_name("_om_kyh", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
-        main_page.click_om_kyh_dd()
-        main_page.click_om_oss()
-        main_page.click_vad_ar_yh_utbildning()
-        self.assertEqual(self.driver.current_url, KYHPageObject.targetURL2, msg="URL doesn't match")
+    def test_celebs_most_popular(self):
+        main_page = page.CelebsMostPopular(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_celebs_most_popular", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_most_popular()
+        main_page.click_birth_date()
+        time.sleep(5)
+        for i in range(15):
+            main_page.click_page_down()
+
+        self.assertTrue(self.driver.current_url, IMDBCelebsTVShows.targetURL7)
 
     @print_name
-    def test_kontakta_oss(self):
-        main_page = page.KontaktaOss(self.driver)
-        self.listener.get_test_method_name("_kontakta_oss", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
-        main_page.click_kontakta_oss_dd()
-        main_page.click_kontakta_oss()
-        main_page.click_jag_vill_jobba_hos_er()
-        main_page.click_lediga_jobb()
-        self.assertEqual(self.driver.current_url, KYHPageObject.targetURL3)
+    def test_celebs_celebrity_news(self):
+        main_page = page.CelebsCelebrityNews(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_celebs_celebrity_news", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        time.sleep(2)
+        main_page.click_celebrity_news()
+        time.sleep(2)
+
+        for i in range(15):
+            main_page.click_page_down()
+        main_page.click_load_more()
+        time.sleep(5)
 
     @print_name
-    def test_inspiration(self):
-        main_page = page.Inspriation(self.driver)
-        self.listener.get_test_method_name("_inspiration", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
-        main_page.click_inspiration_dd()
-        main_page.click_meny()
-        main_page.click_event()
-        main_page.click_senaste()
-        self.assertEqual(self.driver.current_url, KYHPageObject.targetURL4)
-
-    @print_name
-    def test_antagning(self):
-        main_page = page.Antagning(self.driver)
-        self.listener.get_test_method_name("_antagning", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
-        main_page.click_antagning_dd()
-        main_page.click_antagning()
-        main_page.click_page_down()
-        main_page.click_page_down()
-        main_page.click_page_down()
-        main_page.click_till_ansokan()
-        self.assertTrue(self.driver.current_url, KYHPageObject.targetURL5)
-
-
-    """def test_foo(self):
-        main_page = page.KYHMainPage(self.driver)
-        main_page.click_vara_utbildningar_dd()
-        main_page.click_it_in_dd()
-
-        vara_utbildningar = page.VaraUtbildningar(self.driver)
-        vara_utbildningar.click_distans()
+    def test_tvshows_whats_on_tv(self):
+        main_page = page.TvshowsWhatsOnTV(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_tvshows_whats_on_tv", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_whats_on_tv()
+        time.sleep(2)
+        for i in range(15):
+            main_page.click_page_down()
+        main_page.click_see_full_gallery()
         time.sleep(4)
-        vara_utbildningar.click_goteborg()
+        main_page.click_grid()
+        time.sleep(3)
+
+    @print_name
+    def test_tcshows_top_rated(self):
+
+        main_page = page.TvshowsTopRated(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_tvshows_top_rated", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_top_rated()
+        main_page.click_sort_by()
+        time.sleep(3)
+        main_page.click_number_of_ratings()
+        time.sleep(4)
+        main_page.click_enter()
+        for i in range(21):
+            main_page.click_page_down()
+        time.sleep(3)
+        main_page.click_learn_more()
+        time.sleep(3)
+
+    @print_name
+    def test_tcshows_most_popular(self):
+        main_page = page.TvshowsMostPopular(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_tvshows_most_popular", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_most_popular()
+        main_page.click_doc()
+        main_page.click_runtime()
+        main_page.click_next()
+        main_page.click_compact()
+
+    @print_name
+    def test_tcshows_browse_tvshow(self):
+        main_page = page.TvshowsBrowseTvshows(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_tvshows_browse_tvshow", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_browse()
+        main_page.click_search()
+        main_page.click_searchfield()
+        main_page.click_go()
         time.sleep(4)
 
-    def test_nav_through_dropdown_samh(self):
-        main_page = page.KYHMainPage(self.driver)
-
-        main_page.click_vara_utbildningar_dd()
-        main_page.click_samhallsbyggnad_in_dd()"""
-
-
+    @print_name
+    def test_tcshows_tvnews(self):
+        main_page = page.TvshowsTvnews(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_tvshows_tvnews", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_tvnews()
+        main_page.click_second_article()
+        time.sleep(4)
 
 
     def tearDown(self):

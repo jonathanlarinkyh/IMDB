@@ -2,6 +2,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
+from selenium.webdriver.support.ui import Select
 
 
 class PageObject:
@@ -11,98 +12,126 @@ class PageObject:
     def click_page_up(self):
         self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_UP)
 
+    def click_enter(self):
+        self.driver.find_element_by_tag_name("html").send_keys(Keys.ENTER)
 
-class KYHMainPage(PageObject):
 
+class Menu(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
 
-    def click_vara_utbildningar_dd(self):
-        self.driver.find_element_by_xpath("//nav/div/button").click()
-
-    def click_it_in_dd(self):
-        self.driver.find_element_by_link_text("IT").click()
-
-    def click_samhallsbyggnad_in_dd(self):
-        pass
+    def click_menu(self):
+        self.driver.find_element_by_xpath("//label[contains(.,'Menu')]").click()
 
 
-class VaraUtbildningar(PageObject):
+class CelebsBornToday(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
 
-    def click_goteborg(self):
-        self.driver.find_element_by_xpath("//button[contains(.,'Göteborg')]").click()
-
-    def click_distans(self):
-        self.driver.find_element_by_xpath("//button[contains(.,'Distans')]").click()
-
-    def click_pvt(self):
-        self.driver.find_element_by_xpath("//h3[contains(.,'Programvarutestare')]").click()
-        time.sleep(0.5)
-
-    def click_page_down(self):
-        self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_DOWN)
+    def click_born_today(self):
+        self.driver.find_element_by_xpath("//a[contains(.,'Born Today')]").click()
 
 
-class OmKyh(PageObject):
+class CelebsMostPopular(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
 
-    def click_om_kyh_dd(self):
-        self.driver.find_element_by_xpath("//div[2]/buttonQQQ").click()
+    def click_most_popular(self):
+        self.driver.find_element_by_link_text("Most Popular Celebs").click()
 
-    def click_om_oss(self):
-        self.driver.find_element_by_xpath("//a[contains(.,'Om oss')]").click()
+    def click_birth_date(self):
+        self.driver.find_element_by_xpath("//div[2]/a[3]").click()
 
-    def click_vad_ar_yh_utbildning(self):
-        self.driver.find_element_by_link_text("Vad är YH-utbildning?").click()
+    def click_clear_history(self):
+        self.driver.find_element_by_css_selector("#clear_rvi")
 
 
-class KontaktaOss(PageObject):
+class CelebsCelebrityNews(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
 
-    def click_kontakta_oss_dd(self):
-        self.driver.find_element_by_xpath("//div[3]/button").click()
+    def click_celebrity_news(self):
+        self.driver.find_element_by_xpath("//a[contains(.,'Celebrity News')]").click()
 
-    def click_kontakta_oss(self):
-        self.driver.find_element_by_xpath("//a[contains(.,'Kontakta oss')]").click()
+    def click_load_more(self):
+        self.driver.find_element_by_xpath("//button[@id='news-load-more']").click()
 
-    def click_jag_vill_jobba_hos_er(self):
-        self.driver.find_element_by_xpath("//button[contains(.,'Jag vill jobba hos er')]").click()
 
-    def click_lediga_jobb(self):
-        self.driver.find_element_by_xpath("//a[contains(.,'lediga jobb')]").click()
-
-class Inspriation(PageObject):
+class TvshowsWhatsOnTV(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
 
-    def click_inspiration_dd(self):
-        self.driver.find_element_by_xpath("//div[4]/button").click()
+    def click_whats_on_tv(self):
+        self.driver.find_element_by_link_text("What's on TV & Streaming").click()
 
-    def click_meny(self):
-        self.driver.find_element_by_xpath("//a[contains(.,'Meny')]").click()
+    def click_see_full_gallery(self):
+        self.driver.find_element_by_css_selector(".article:nth-child(27) .position_bottom").click()
 
-    def click_event(self):
-        self.driver.find_element_by_xpath("//li[2]/button").click()
-
-    def click_senaste(self):
-        self.driver.find_element_by_xpath("//span[contains(.,'Senaste')]").click()
+    def click_grid(self):
+        self.driver.find_element_by_css_selector(".ipc-icon--grid-view").click()
 
 
-class Antagning(PageObject):
+class TvshowsTopRated(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
 
-    def click_antagning_dd(self):
-        self.driver.find_element_by_xpath("//div[5]/button").click()
+    def click_top_rated(self):
+        self.driver.find_element_by_link_text("Top Rated Shows").click()
 
-    def click_antagning(self):
-        self.driver.find_element_by_xpath("//a[contains(.,'Antagning')]").click()
+    def click_sort_by(self):
+        self.driver.find_element_by_id("lister-sort-by-options").click()
 
-    def click_till_ansokan(self):
-        self.driver.find_element_by_xpath("//a/div/div")
+    def click_number_of_ratings(self):
+        Select(self.driver.find_element_by_id("lister-sort-by-options")).select_by_visible_text("Number of Ratings")
+        #select.select_by_visible_text("Number of Ratings")
 
+    def click_learn_more(self):
+        self.driver.find_element_by_xpath("//span/div/div/a").click()
+
+
+class TvshowsMostPopular(PageObject):
+    def __init__(self, driver: webdriver.Chrome):
+        self.driver = driver
+
+    def click_most_popular(self):
+        self.driver.find_element_by_link_text("Most Popular Shows").click()
+
+    def click_doc(self):
+        self.driver.find_element_by_xpath("//a[contains(text(),'Documentary')]").click()
+
+    def click_runtime(self):
+        self.driver.find_element_by_css_selector(".sorting > a:nth-child(11)").click()
+
+    def click_next(self):
+        self.driver.find_element_by_xpath("(//a[contains(text(),'Next »')])[2]").click()
+
+    def click_compact(self):
+        self.driver.find_element_by_xpath("//a[contains(text(),'Compact')]").click()
+
+
+class TvshowsBrowseTvshows(PageObject):
+    def __init__(self, driver: webdriver.Chrome):
+        self.driver = driver
+
+    def click_browse(self):
+        self.driver.find_element_by_link_text("Browse TV Shows by Genre").click()
+
+    def click_search(self):
+        self.driver.find_element_by_xpath("//a[contains(text(),'Browse/Search by keyword')]").click()
+
+    def click_searchfield(self):
+        self.driver.find_element_by_xpath("//div[@id='main']/div/div/form/input[3]").send_keys("laser")
+
+    def click_go(self):
+        self.driver.find_element_by_css_selector(".btn").click()
+
+class TvshowsTvnews(PageObject):
+    def __init__(self, driver: webdriver.Chrome):
+        self.driver = driver
+
+    def click_tvnews(self):
+        self.driver.find_element_by_link_text("TV News").click()
+
+    def click_second_article(self):
+        self.driver.find_element_by_xpath("//section[@id='news-article-list']/article[2]/header/h2/a").click()
 
