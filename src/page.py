@@ -44,3 +44,11 @@ class IMDBMenuMovies(PageObject):
 
     def click_menu_dd_in_theater(self):
         self.driver.find_element_by_xpath("//a[contains(@href, 'https://www.imdb.com/movies-in-theaters/?ref_=nv_mv_inth')]").click()
+
+
+class ReleaseCalendar(PageObject):
+    def __init__(self, driver: webdriver.Chrome):
+        self.driver = driver
+
+    def click_clear_history(self):
+        self.driver.find_element_by_xpath("//a[contains(@href, '#')]").click()
