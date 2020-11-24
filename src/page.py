@@ -5,6 +5,7 @@ import unittest
 from selenium.webdriver.common.keys import Keys
 #s2323jkjk
 
+
 class PageObject:
 
     def page_down(self):
@@ -13,10 +14,21 @@ class PageObject:
     def page_up(self):
         self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_UP)
 
+    def page_whole_down(self):
+        for page in range(0, 6):
+            self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_DOWN)
+
+    def page_whole_up(self):
+        for page in range(0, 6):
+            self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_UP)
+
 
 class IMDBMenuMovies(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
+
+    def click_home(self):
+        self.driver.find_element_by_xpath("(//a[contains(@href, '/?ref_=nv_home')])[2]").click()
 
     def click_menu_dd(self):
         self.driver.find_element_by_xpath("//label[@id='imdbHeader-navDrawerOpen--desktop']").click()
@@ -51,4 +63,13 @@ class ReleaseCalendar(PageObject):
         self.driver = driver
 
     def click_clear_history(self):
-        self.driver.find_element_by_xpath("//a[contains(@href, '#')]").click()
+        self.driver.find_element_by_css_selector("#clear_rvi").click()
+
+    def click_first_choice(self):
+        self.driver.find_element_by_css_selector("#main > ul:nth-child(2) a").click()
+
+    def click_second_choice(self):
+        self.driver.find_element_by_css_selector("ul:nth-child(4) > li:nth-child(1) > a").click()
+
+    def click_director(self):
+        self.driver.find_element_by_css_selector(".credit_summary_item:nth-child(2) > a").click()

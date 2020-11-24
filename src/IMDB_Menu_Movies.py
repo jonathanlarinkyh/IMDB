@@ -5,8 +5,7 @@ import time
 from IMDB.src import page
 
 
-# s2323
-
+#Sweet
 
 def web_factory():
     driver = webdriver.Chrome()
@@ -52,7 +51,6 @@ class IMDBPageMenu(unittest.TestCase):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
         time.sleep(1)
-
         main_page.click_menu_dd_most_popular_movies()
 
     def test_browse_movies_by_genre_in_dd(self):
@@ -72,7 +70,6 @@ class IMDBPageMenu(unittest.TestCase):
         main_page.click_menu_dd()
         time.sleep(1)
         main_page.click_menu_dd_showtime_tickets()
-        time.sleep(5)
 
     def test_in_theaters_in_dd(self):
         main_page = page.IMDBMenuMovies(self.driver)
@@ -90,21 +87,48 @@ class IMDBReleaseCalendar(unittest.TestCase):
         self.driver = web_factory()
         self.driver.get("https://www.imdb.com/")
 
-    def test_release_calendar_in_dd(self):
+    def test_release_calendar_movie_clear(self):
+        main_page = page.IMDBMenuMovies(self.driver)
+        main_page.click_menu_dd()
+        time.sleep(1)
+        main_page.click_menu_dd_release_calendar()
+        second_page = page.ReleaseCalendar(self.driver)
+        second_page.click_first_choice()
+        time.sleep(5)
+        main_page.page_whole_down()
+        time.sleep(5)
+        second_page.click_clear_history()
+        time.sleep(5)
+
+    def test_release_calendar_movies_clear(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
         time.sleep(1)
         main_page.click_menu_dd_release_calendar()
 
         second_page = page.ReleaseCalendar(self.driver)
+        second_page.click_first_choice()
+        time.sleep(1)
+        main_page.click_home()
+        main_page.click_menu_dd()
+        main_page.click_menu_dd_release_calendar()
+        time.sleep(1)
+        second_page.click_second_choice()
+        time.sleep(1)
+        main_page.page_whole_down()
+        time.sleep(1)
         second_page.click_clear_history()
-        main_page.page_down()
-        main_page.page_down()
-        main_page.page_down()
-        main_page.page_down()
-        main_page.page_down()
-        main_page.page_down()
 
+    def test_click_director(self):
+        main_page = page.IMDBMenuMovies(self.driver)
+        main_page.click_menu_dd()
+        time.sleep(1)
+        main_page.click_menu_dd_release_calendar()
+
+        second_page = page.ReleaseCalendar(self.driver)
+        second_page.click_first_choice()
+        time.sleep(1)
+        second_page.click_director()
 
     def tearDown(self):
         self.driver.close()
