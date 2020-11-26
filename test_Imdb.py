@@ -1,14 +1,9 @@
-import page
 import time
 import unittest
+import page
 
-import HtmlTestRunner
 from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.abstract_event_listener import AbstractEventListener
-
 
 options = webdriver.ChromeOptions()
 options.add_argument('ignore-certificate-errors')
@@ -51,7 +46,7 @@ class IMDBTest(unittest.TestCase):
         self.driver.close()
 
 class test_IMBD_Nav(unittest.TestCase):
-    base_url = "https://www.hrbank.af"
+    base_url = "www.imdb.com"
 
     def __init__(self, methodName: str = ...):
         super().__init__(methodName)
@@ -66,6 +61,4 @@ class test_IMBD_Nav(unittest.TestCase):
         main_page.click_IMDBMainPage()
 
 if __name__ == '__main__':
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_name="IMDB_Tests",
-                                                           output='C:/Users/AmAj/Desktop/Python '
-                                                                  'Projects/IMDB/Jonathan/Reports'))
+    pass

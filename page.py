@@ -17,7 +17,6 @@ class PageObject:
 
 
 class IMDBMainPage(PageObject):
-    def __init__(self, driver: webdriver.Chrome):
+    def __init__(self, driver: webdriver.Firefox
         self.driver = driver
 
-        pass
