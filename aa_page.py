@@ -1,5 +1,3 @@
-from lib2to3.pgen2 import driver
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
@@ -30,6 +28,7 @@ class IMDBMainPage(PageObject):
 class IMDB_menu_awards(PageObject):
 
     def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
         self.driver = driver
 
     def click_menu_dd(self):
@@ -80,9 +79,6 @@ class IMDB_menu_awards(PageObject):
 
     def click_All_Events(self):
         self.driver.find_element_by_xpath("//a[@href='https://www.imdb.com/event/all/?ref_=nv_ev_all']").click()
-
-
-
 
 
 class imdb(PageObject):

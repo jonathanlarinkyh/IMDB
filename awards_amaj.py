@@ -1,5 +1,6 @@
-import aa_page
+from datetime import datetime
 import time
+import aa_page
 import unittest
 
 import HtmlTestRunner
@@ -77,7 +78,7 @@ class test_imdb_menu(unittest.TestCase):
 
     #        page.IMDBMainPage(self.driver).accept_cookies()
 
-    def foo_test_click_menu(self):
+    def test_click_menu(self):
         main_page = aa_page.IMDBMainPage(self.driver)
         main_page.click_menu_dd()
         self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/Main Menu.png")
@@ -87,9 +88,10 @@ class test_imdb_menu(unittest.TestCase):
         main_page = aa_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         main_page.click_oscars()
+
         self.assertEqual(self.driver.find_element_by_xpath("//h1[normalize-space()='OSCARS']").text, "OSCARS",
                          msg="Wrong Page. Not Oscars")
-
+        self.driver.save_screenshot("SC_Amaj/oscars.png")
         time.sleep(5)
 
     def foo_test_002_menu_BPW(self):
