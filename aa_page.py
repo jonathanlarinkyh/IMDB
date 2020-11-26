@@ -1,6 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class PageObject:
@@ -16,13 +19,20 @@ class PageObject:
     # def accept_cookies(self):
     #     self.driver.find_element_by_id("cn-accept-cookie").click()
 
+    def find_element_clickable_element_by_xpath(self, selector, wait=0):
+        return WebDriverWait(self.driver, wait).until(EC.element_to_be_clickable((By.XPATH, selector)))
+
+    def find_visible_element_by_xpath(self, selector, wait=0):
+        return WebDriverWait(self.driver, wait).until(EC.visibility_of_element_located((By.XPATH, selector)))
+
 
 class IMDBMainPage(PageObject):
     def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
         self.driver = driver
 
     def click_menu_dd(self):
-        self.driver.find_element_by_xpath("//label[@id='imdbHeader-navDrawerOpen--desktop']").click()
+        self.find_element_clickable_element_by_xpath("//label[contains(.,'Menu')]", wait=10).click()
 
 
 class IMDB_menu_awards(PageObject):
@@ -32,55 +42,56 @@ class IMDB_menu_awards(PageObject):
         self.driver = driver
 
     def click_menu_dd(self):
-        self.driver.find_element_by_xpath("//label[@id='imdbHeader-navDrawerOpen--desktop']").click()
+        self.find_element_clickable_element_by_xpath("//label[contains(.,'Menu')]", wait=10).click()
 
     def click_oscars(self):
-        self.driver.find_element_by_xpath("//a[@href='/oscars/?ref_=nv_ev_acd']").click()
+        self.find_element_clickable_element_by_xpath("//a[@href='/oscars/?ref_=nv_ev_acd']", wait=15).click()
 
     def click_best_picture_Winner(self):
-        self.driver.find_element_by_xpath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div["
-                                          "3]/span/div/div/ul/a[3]").click()
+        self.find_element_clickable_element_by_xpath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div["
+                                          "3]/span/div/div/ul/a[3]", wait=15).click()
 
     def click_Golden_Globes(self):
-        self.driver.find_element_by_xpath("//a[@href='/golden-globes/?ref_=nv_ev_gg']").click()
+        self.find_element_clickable_element_by_xpath("//a[@href='/golden-globes/?ref_=nv_ev_gg']", wait=15).click()
     #
 
     def click_Emmys(self):
-        self.driver.find_element_by_xpath("//a[@href='/emmys/?ref_=nv_ev_rte']").click()
+        self.find_element_clickable_element_by_xpath("//a[@href='/emmys/?ref_=nv_ev_rte']", wait=15).click()
     #
 
     def click_STARmeter_Awards(self):
-        self.driver.find_element_by_xpath("//a[@href='/starmeterawards/?ref_=nv_ev_sma']").click()
+        self.find_element_clickable_element_by_xpath("//a[@href='/starmeterawards/?ref_=nv_ev_sma']", wait=15).click()
     #
 
     def click_SanDiego_Comic_Con(self):
-        self.driver.find_element_by_xpath("//a[@href='/comic-con/?ref_=nv_ev_comic']").click()
+        self.find_element_clickable_element_by_xpath("//a[@href='/comic-con/?ref_=nv_ev_comic']", wait=15).click()
     #
 
     def click_NY_Comic_Con(self):
-        self.driver.find_element_by_xpath("//a[@href='/nycc/?ref_=nv_ev_nycc']").click()
+        self.find_element_clickable_element_by_xpath("//a[@href='/nycc/?ref_=nv_ev_nycc']", wait=15).click()
     #
 
     def click_Sundance_Film_Festival(self):
-        self.driver.find_element_by_xpath("//a[@href='/sundance/?ref_=nv_ev_sun']").click()
+        self.find_element_clickable_element_by_xpath("//a[@href='/sundance/?ref_=nv_ev_sun']", wait=15).click()
     #
 
     def click_Toronto_Intl_Film_Festival(self):
-        self.driver.find_element_by_xpath("//a[@href='/toronto/?ref_=nv_ev_tor']").click()
+        self.find_element_clickable_element_by_xpath("//a[@href='/toronto/?ref_=nv_ev_tor']",wait=15).click()
     #
 
     def click_Awards_central(self):
-        self.driver.find_element_by_xpath("//a[@href='/awards-central/?ref_=nv_ev_awrd']").click()
+        self.find_element_clickable_element_by_xpath("//a[@href='/awards-central/?ref_=nv_ev_awrd']", wait=15).click()
     #
 
     def click_Festival_Central(self):
-        self.driver.find_element_by_xpath("//a[@href='/festival-central/?ref_=nv_ev_fc']").click()
+        self.find_element_clickable_element_by_xpath("//a[@href='/festival-central/?ref_=nv_ev_fc']", wait=15).click()
     #
 
     def click_All_Events(self):
-        self.driver.find_element_by_xpath("//a[@href='https://www.imdb.com/event/all/?ref_=nv_ev_all']").click()
+        self.find_element_clickable_element_by_xpath("//a[@href='https://www.imdb.com/event/all/?ref_=nv_ev_all']", wait=15).click()
 
 
 class imdb(PageObject):
     def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
         self.driver = driver
