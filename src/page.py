@@ -31,6 +31,9 @@ class PageObject:
     def find_element_click_element_by_css_selector(self, selector, wait=0):
         return WebDriverWait(self.driver, wait).until(EC.element_to_be_clickable((By.CSS_SELECTOR, selector)))
 
+    def find_element_visible_element_by_xpath(self, selector, wait=0):
+        return WebDriverWait(self.driver, wait).until(EC.visibility_of_element_located((By.XPATH, selector)))
+
 
 class IMDBMenuMovies(PageObject):
     def __init__(self, driver: webdriver.Chrome):
@@ -91,3 +94,6 @@ class ReleaseCalendar(PageObject):
 
     def click_director(self):
         self.find_element_click_element_by_css_selector(".credit_summary_item:nth-child(2) > a", wait=10).click()
+
+    def history_clickable_first_image(self):
+        self.find_element_click_element_by_xpath("//div[3]/div/div[2]/div/a/img", wait=10).click()

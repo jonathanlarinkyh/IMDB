@@ -3,9 +3,13 @@ import unittest
 from selenium import webdriver
 import time
 from IMDB.src import page
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import WebDriverException
 
 
-#Sweet
+# Sweet
 
 def web_factory():
     driver = webdriver.Chrome()
@@ -134,7 +138,7 @@ class IMDBReleaseCalendar(unittest.TestCase):
         time.sleep(1)
         second_page.click_clear_history()
 
-    def test_click_director(self):
+    def test_click_director_clear(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
         main_page.click_menu_dd_release_calendar()
@@ -143,6 +147,20 @@ class IMDBReleaseCalendar(unittest.TestCase):
         second_page.click_first_choice()
         time.sleep(1)
         second_page.click_director()
+        main_page.page_whole_down()
+        time.sleep(1)
+        second_page.click_clear_history()
+
+    def test_release_calendar_movie_history_clickable(self): #need to check why it works and not
+        main_page = page.IMDBMenuMovies(self.driver)
+        main_page.click_menu_dd()
+        main_page.click_menu_dd_release_calendar()
+        second_page = page.ReleaseCalendar(self.driver)
+        second_page.click_first_choice()
+        time.sleep(1)
+        main_page.page_whole_down()
+        time.sleep(1)
+        second_page.history_clickable_first_image()
 
     def tearDown(self):
         self.driver.close()
