@@ -1,9 +1,14 @@
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import time
 from selenium.webdriver.support.ui import Select
+import random
+import string
 
+letters = [random.choice(chr(random.randint(0, 65000)) + string.ascii_lowercase) for i in
+           range(random.randint(5, 26))]
+password = [random.choice(chr(random.randint(0, 65000)) + string.ascii_lowercase) for l in
+            range(random.randint(5, 26))]
 
 class PageObject:
     def click_page_down(self):
@@ -19,13 +24,10 @@ class PageObject:
         self.driver.find_element_by_tag_name("html").send_keys(Keys.BACK_SPACE)
 
 
-class FindElementByXpath:
-    def click_xpath(self):
-        self.driver.find_element_by_xpath("").click()
 
 
 
-class Menu(PageObject, FindElementByXpath):
+class Menu(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
 
@@ -33,7 +35,7 @@ class Menu(PageObject, FindElementByXpath):
         self.driver.find_element_by_xpath("//label[contains(.,'Menu')]").click()
 
 
-class CelebsBornToday(PageObject, FindElementByXpath):
+class CelebsBornToday(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
 
@@ -59,8 +61,8 @@ class CelebsCelebrityNews(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
 
-    def click_celebrity_news(self):
-        self.driver.find_element_by_xpath("//a[contains(.,'Celebrity News')]").click()
+    #def click_celebrity_news(self):
+        #self.driver.find_element_by_xpath("//a[contains(.,'Celebrity News')]").click()
 
     def click_load_more(self):
         self.driver.find_element_by_xpath("//button[@id='news-load-more']").click()
@@ -92,10 +94,6 @@ class TvshowsTopRated(PageObject):
 
     def click_number_of_ratings(self):
         Select(self.driver.find_element_by_id("lister-sort-by-options")).select_by_visible_text("Number of Ratings")
-        #select.select_by_visible_text("Number of Ratings")
-
-    def click_learn_more(self):
-        self.driver.find_element_by_xpath("//span/div/div/a").click()
 
 
 class TvshowsMostPopular(PageObject):
@@ -134,6 +132,7 @@ class TvshowsBrowseTvshows(PageObject):
     def click_go(self):
         self.driver.find_element_by_css_selector(".btn").click()
 
+
 class TvshowsTvnews(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
@@ -160,3 +159,45 @@ class TvshowsIndian(PageObject):
 
     def click_descending(self):
         self.driver.find_element_by_xpath("//span/div/div/div[3]/div/div/div/span").click()
+
+
+class CreateUser(PageObject):
+    def __init__(self, driver: webdriver.Chrome):
+        self.driver = driver
+
+    def click_sign_in(self):
+        self.driver.find_element_by_xpath("//nav[@id='imdbHeader']/div[2]/div[5]/a/div").click()
+
+
+    def click_create_account(self):
+        self.driver.find_element_by_link_text("Create a New Account").click()
+
+
+    def generate_name_email(self):
+        #letters = [random.choice(chr(random.randint(0, 65000)) + string.ascii_lowercase) for i in
+                   #range(random.randint(5, 26))]
+
+        maillist = ["@hotmail.com", "@gmail.com", "@yahoo.com", "@mail.com"]
+        mail = [random.choice(maillist)]
+        self.driver.find_element_by_xpath("//input[@id='ap_customer_name']").send_keys(letters)
+        self.driver.find_element_by_xpath("//input[@id='ap_email']").send_keys(letters + mail)
+
+
+    def generate_password(self):
+        #password = [random.choice(chr(random.randint(0, 65000))) for i in
+                    #range(random.randint(5, 26))]
+        self.driver.find_element_by_css_selector("#ap_password").send_keys(password)
+        self.driver.find_element_by_css_selector("#ap_password_check").send_keys(password)
+        print("".join(password))
+
+    def create(self):
+        self.driver.find_element_by_xpath("//input[@id='continue']").click()
+
+
+
+    def click_hear_letters(self):
+        self.driver.find_element_by_xpath("//a[contains(text(),'Hear the characters')]").click()
+
+
+
+
