@@ -57,6 +57,15 @@ class IMDBMenuMovies(PageObject):
     def click_menu_dd_in_theater(self):
         self.driver.find_element_by_xpath("//a[contains(@href, 'https://www.imdb.com/movies-in-theaters/?ref_=nv_mv_inth')]").click()
 
+    def click_menu_dd_coming_soon(self):
+        self.driver.find_element_by_xpath("//a[contains(@href, 'https://www.imdb.com/coming-soon/?ref_=nv_mv_cs')]").click()
+
+    def click_menu_dd_movie_news(self):
+        self.driver.find_element_by_xpath("//a[contains(.,'Movie News')]").click()
+
+    def click_menu_dd_india_movie_spotlight(self):
+        self.driver.find_element_by_xpath("//a[contains(.,'India Movie Spotlight')]").click()
+
 
 class ReleaseCalendar(PageObject):
     def __init__(self, driver: webdriver.Chrome):
