@@ -1,9 +1,4 @@
-from datetime import datetime
 import time
-
-from selenium.webdriver.support.abstract_event_listener import AbstractEventListener
-from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
-
 import aa_page
 import unittest
 
@@ -35,7 +30,6 @@ def webdriver_factory():
     return webdriver_chrome_headless()
 
 
-
 class IMDBTest(unittest.TestCase):
     # declare variable to store the URL to be visited
     base_url = "https://www.imdb.com"
@@ -46,9 +40,6 @@ class IMDBTest(unittest.TestCase):
     def setUp(self):
         # declare and initialize driver variable
         self.driver = webdriver.Chrome()
-        # Screenshot Path
-        self.listener = ScreenshotListener("SC_Amaj/")
-        self.driver = EventFiringWebDriver(self.driver, self.listener)
         # close the app dialogue page
         self.driver.get("https://imdb.com")
         time.sleep(5)
@@ -67,7 +58,6 @@ class test_IMBD_Nav(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver_chrome()
         self.driver.get("https://www.imdb.com")
-        # Screenshot Path
 
     def test_page_access(self):
         main_page = self.driver.get("https://imdb.com")
@@ -82,15 +72,12 @@ class test_imdb_menu(unittest.TestCase):
         super().__init__(methodName)
 
     def setUp(self):
-        self.driver = webdriver_chrome()
+        self.driver = webdriver_chrome_headless()
         self.driver.get("https://www.imdb.com")
-
-    #        page.IMDBMainPage(self.driver).accept_cookies()
 
     def test_click_menu(self):
         main_page = aa_page.IMDBMainPage(self.driver)
         main_page.click_menu_dd()
-        # self.listener.get_test_method_name("_click_menu", datetime.now().strftime("%H.%M.%S, %m.%d.%Y"))
 
     def test_001_menu_oscars(self):
         main_page = aa_page.IMDB_menu_awards(self.driver)
