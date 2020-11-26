@@ -5,28 +5,28 @@ import page
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 
-options = webdriver.ChromeOptions()
+options = webdriver.FirefoxOptions()
 options.add_argument('ignore-certificate-errors')
 print(help(EC.presence_of_all_elements_located))
 
 
 def webdriver_chrome():
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Firefox(options=options)
     driver.implicitly_wait(10)
     driver.maximize_window()
     return driver
 
 
-def webdriver_chrome_headless():
+def webdriver_Firefox_headless():
     options.headless = True
-    driver = webdriver.Chrome(chrome_options=options)
+    driver = webdriver.Firefox(Firefox_options=options)
     driver.set_window_size(1920, 1080)
     driver.implicitly_wait(10)
     return driver
 
 
 def webdriver_factory():
-    return webdriver_chrome_headless()
+    return webdriver_Firefox_headless()
 
 class IMDBTest(unittest.TestCase):
     # declare variable to store the URL to be visited
@@ -37,7 +37,7 @@ class IMDBTest(unittest.TestCase):
 
     def setUp(self):
         # declare and initialize driver variable
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Firefox()
         # close the app dialogue page
         self.driver.get("https://imdb.com")
         time.sleep(5)
@@ -53,7 +53,7 @@ class test_IMBD_Nav(unittest.TestCase):
         self.target_url = "https://www.imdb.com"
 
     def setUp(self):
-        self.driver = webdriver_chrome()
+        self.driver = webdriver_Firefox()
         self.driver.get("https://www.imdb.com")
 
     def test_page_access(self):
