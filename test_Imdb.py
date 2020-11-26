@@ -10,7 +10,7 @@ options.add_argument('ignore-certificate-errors')
 print(help(EC.presence_of_all_elements_located))
 
 
-def webdriver_chrome():
+def webdriver_Firefox():
     driver = webdriver.Firefox(options=options)
     driver.implicitly_wait(10)
     driver.maximize_window()
