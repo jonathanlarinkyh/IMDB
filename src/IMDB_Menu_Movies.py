@@ -31,77 +31,66 @@ class IMDBPageMenu(unittest.TestCase):
     def test_release_calendar_in_dd(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_release_calendar()
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/calendar/?ref_=nv_mv_cal")
 
     def test_dvd_blue_releases_in_dd(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_dvd_blue_releases()
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/list/ls016522954/?ref_=nv_tvv_dvd")
 
     def test_top_rated_movies_in_dd(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_top_rated_movies()
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/chart/top/?ref_=nv_mv_250")
 
     def test_most_popular_movies_in_dd(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_most_popular_movies()
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/chart/moviemeter/?ref_=nv_mv_mpm")
 
     def test_browse_movies_by_genre_in_dd(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_browse_movies_by_genre()
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/feature/genre/?ref_=nv_ch_gr")
 
     def test_top_box_office_in_dd(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_top_box_office()
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/chart/boxoffice/?ref_=nv_ch_cht")
 
     def test_showtime_tickets_in_dd(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_showtime_tickets()
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/showtimes/?ref_=nv_mv_sh")
 
     def test_in_theaters_in_dd(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_in_theater()
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/movies-in-theaters/?ref_=nv_mv_inth")
 
     def test_coming_soon_in_dd(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_coming_soon()
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/movies-coming-soon/?ref_=nv_mv_cs")
 
     def test_movie_news_in_dd(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_movie_news()
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/news/movie/?ref_=nv_nw_mv")
 
     def test_india_movie_spotlight_in_dd(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_india_movie_spotlight()
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/india/toprated/?ref_=nv_mv_in")
 
@@ -118,7 +107,6 @@ class IMDBReleaseCalendar(unittest.TestCase):
     def test_release_calendar_movie_clear(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_release_calendar()
         second_page = page.ReleaseCalendar(self.driver)
         second_page.click_first_choice()
@@ -131,7 +119,6 @@ class IMDBReleaseCalendar(unittest.TestCase):
     def test_release_calendar_movies_clear(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_release_calendar()
 
         second_page = page.ReleaseCalendar(self.driver)
@@ -150,7 +137,6 @@ class IMDBReleaseCalendar(unittest.TestCase):
     def test_click_director(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
-        time.sleep(1)
         main_page.click_menu_dd_release_calendar()
 
         second_page = page.ReleaseCalendar(self.driver)
