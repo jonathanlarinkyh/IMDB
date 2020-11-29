@@ -75,25 +75,25 @@ class test_imdb_menu(unittest.TestCase):
         self.driver = webdriver_chrome_headless()
         self.driver.get("https://www.imdb.com")
 
-    def test_click_menu(self):
+    def foo_test_click_menu(self):
         main_page = aa_page.IMDBMainPage(self.driver)
         main_page.click_menu_dd()
 
-    def test_001_menu_oscars(self):
+    def foo_test_001_menu_oscars(self):
         main_page = aa_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         main_page.click_oscars()
 
         time.sleep(5)
 
-    def test_002_menu_BPW(self):
+    def foo_test_002_menu_BPW(self):
         main_page = aa_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         time.sleep(2)
         main_page.click_best_picture_Winner()
         time.sleep(5)
 
-    def test_003_menu_Golden_Globes(self):
+    def foo_test_003_menu_Golden_Globes(self):
         main_page = aa_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         time.sleep(2)
@@ -198,7 +198,27 @@ class test_imdb_menu(unittest.TestCase):
         self.driver.close()
 
 
+class test_Awards_and_Events_menu(unittest.TestCase):
+
+    def __init__(self, methodName: str = ...):
+        super().__init__(methodName)
+
+    def setUp(self):
+        self.driver = webdriver_chrome_headless()
+        self.driver.get("https://www.imdb.com")
+
+    def test_elements_of_oscars(self):
+        main_page = aa_page.IMDB_Menu_Oscars(self.driver)
+        main_page.click_oscars_menu()
+        main_page.click_oscars_main()
+        main_page.click_winners_in_oscar()
+        main_page.click_year_in_winners()
+
+    def tearDown(self):
+        self.driver.close()
+
+
 if __name__ == '__main__':
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_name="IMDB_Tests",
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_name="IMDB_Tests_Amaj",
                                                            output='C:/Users/AmAj/Desktop/Python '
                                                                   'Projects/IMDB/Jonathan/Reports'))

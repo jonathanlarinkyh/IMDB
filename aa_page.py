@@ -24,6 +24,9 @@ class PageObject:
     def find_element_clickable_element_by_xpath(self, selector, wait=0):
         return WebDriverWait(self.driver, wait).until(EC.element_to_be_clickable((By.XPATH, selector)))
 
+    def find_element_clickable_element_by_css_selector(self, selector, wait=0):
+        return WebDriverWait(self.driver, wait).until(EC.element_to_be_clickable((By.CSS_SELECTOR, selector)))
+
     def find_visible_element_by_xpath(self, selector, wait=0):
         return WebDriverWait(self.driver, wait).until(EC.visibility_of_element_located((By.XPATH, selector)))
 
@@ -50,55 +53,69 @@ class IMDB_menu_awards(PageObject):
     def click_oscars(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/oscars/?ref_=nv_ev_acd']", wait=15).click()
         self.driver.save_screenshot("SC_Amaj/Oscars/" + "OSCAR_SC " + time.asctime().replace(":", "") + ".png")
+        time.sleep(5)
+
+        self.find_element_clickable_element_by_css_selector(" a[title='Winners'] span:nth-child(1)").click()
+        self.driver.save_screenshot("SC_Amaj/Oscars/" + "Winners_SC " + time.asctime().replace(":", "") + ".png")
+        time.sleep(5)
 
     def click_best_picture_Winner(self):
-        self.find_element_clickable_element_by_xpath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div["
-                                          "3]/span/div/div/ul/a[3]", wait=15).click()
+        self.find_element_clickable_element_by_xpath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[3]/span/div/div/ul/a[3]", wait=15).click()
         self.driver.save_screenshot("SC_Amaj/BPW/" + "BPW_SC" + time.asctime().replace(":", "") + ".png")
 
     def click_Golden_Globes(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/golden-globes/?ref_=nv_ev_gg']", wait=15).click()
         self.driver.save_screenshot("SC_Amaj/G-Globes/" + "Golden Globe " + time.asctime().replace(":", "") + ".png")
+
     #
 
     def click_Emmys(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/emmys/?ref_=nv_ev_rte']", wait=15).click()
         self.driver.save_screenshot("SC_Amaj/Emmys/" + "Emmys_SC" + time.asctime().replace(":", "") + ".png")
+
     #
 
     def click_STARmeter_Awards(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/starmeterawards/?ref_=nv_ev_sma']", wait=15).click()
         self.driver.save_screenshot("SC_Amaj/Star Meter Awards/" + "StarMeter Awards " + time.asctime().replace(":", "") + ".png")
+
     #
 
     def click_SanDiego_Comic_Con(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/comic-con/?ref_=nv_ev_comic']", wait=15).click()
         self.driver.save_screenshot("SC_Amaj/SD Comic-Con/" + "SD_Comic_Con " + time.asctime().replace(":", "") + ".png")
+
     #
 
     def click_NY_Comic_Con(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/nycc/?ref_=nv_ev_nycc']", wait=15).click()
         self.driver.save_screenshot("SC_Amaj/NY Comic-Con/" + "NY Comic_Con " + time.asctime().replace(":", "") + ".png")
+
     #
 
     def click_Sundance_Film_Festival(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/sundance/?ref_=nv_ev_sun']", wait=15).click()
         self.driver.save_screenshot("SC_Amaj/Sundance Film F/" + "Sundance Film Fes " + time.asctime().replace(":", "") + ".png")
+
     #
 
     def click_Toronto_Intl_Film_Festival(self):
-        self.find_element_clickable_element_by_xpath("//a[@href='/toronto/?ref_=nv_ev_tor']",wait=15).click()
+        self.find_element_clickable_element_by_xpath("//a[@href='/toronto/?ref_=nv_ev_tor']", wait=15).click()
         self.driver.save_screenshot("SC_Amaj/Toronto Intl Film F/" + "Toronto Intl FF " + time.asctime().replace(":", "") + ".png")
+        time.sleep(5)
+
     #
 
     def click_Awards_central(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/awards-central/?ref_=nv_ev_awrd']", wait=15).click()
         self.driver.save_screenshot("SC_Amaj/Awards Central/" + "Awards Central " + time.asctime().replace(":", "") + ".png")
+
     #
 
     def click_Festival_Central(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/festival-central/?ref_=nv_ev_fc']", wait=15).click()
         self.driver.save_screenshot("SC_Amaj/Festival Central/" + "Festival Central " + time.asctime().replace(":", "") + ".png")
+
     #
 
     def click_All_Events(self):
@@ -106,7 +123,24 @@ class IMDB_menu_awards(PageObject):
         self.driver.save_screenshot("SC_Amaj/All Events/" + "All Events " + time.asctime().replace(":", "") + ".png")
 
 
-class imdb(PageObject):
+class IMDB_Menu_Oscars(PageObject):
+
     def __init__(self, driver: webdriver.Chrome):
         super().__init__()
         self.driver = driver
+
+    def click_oscars_menu(self):
+        self.find_element_clickable_element_by_xpath("//label[contains(.,'Menu')]", wait=10).click()
+
+    def click_oscars_main(self):
+        self.find_element_clickable_element_by_xpath("//a[@href='/oscars/?ref_=nv_ev_acd']", wait=15).click()
+        time.sleep(5)
+
+    def click_winners_in_oscar(self):
+        self.find_element_clickable_element_by_css_selector(" a[title='Winners'] span:nth-child(1)").click()
+        self.driver.save_screenshot("SC_Amaj/Oscars/" + "Winners_SC " + time.asctime().replace(":", "") + ".png")
+        time.sleep(5)
+
+    def click_year_in_winners(self):
+        self.find_element_clickable_element_by_xpath("//a[normalize-space()='2020']", wait=10).click()
+        time.sleep(5)
