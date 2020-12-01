@@ -25,7 +25,7 @@ class PageObject:
             self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_DOWN)
 
     def page_whole_up(self):
-        for page in range(0, 6):
+        for page in range(0, 8):
             self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_UP)
 
     def find_element_click_element_by_xpath(self, selector, wait=0):

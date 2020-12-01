@@ -1,5 +1,5 @@
 import unittest
-
+import HtmlTestRunner
 from selenium import webdriver
 import time
 from IMDB.src import page
@@ -151,7 +151,7 @@ class IMDBReleaseCalendar(unittest.TestCase):
         main_page.page_whole_down()
         second_page.click_clear_history()
 
-    def test_release_calendar_movie_history_clickable(self): #need to check why it works and not
+    def test_release_calendar_movie_history_clickable(self):
         main_page = page.IMDBMenuMovies(self.driver)
         main_page.click_menu_dd()
         main_page.click_menu_dd_release_calendar()
@@ -220,4 +220,6 @@ class IMDBDVDnBlueRayReleases(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main(verbosity=2)
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_name="FullReport",
+                                                           template="template_report/template_report.html",
+                                                           add_timestamp=False), verbosity=2)
