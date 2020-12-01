@@ -11,6 +11,9 @@ from selenium.webdriver.common.by import By
 
 class PageObject:
 
+    def back_page(self):
+        self.driver.find_element_by_tag_name("html").send_keys(Keys.BACK_SPACE)
+
     def page_down(self):
         self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_DOWN)
 
@@ -18,7 +21,7 @@ class PageObject:
         self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_UP)
 
     def page_whole_down(self):
-        for page in range(0, 6):
+        for page in range(0, 8):
             self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_DOWN)
 
     def page_whole_up(self):
@@ -97,3 +100,11 @@ class ReleaseCalendar(PageObject):
 
     def history_clickable_first_image(self):
         self.find_element_click_element_by_xpath("//div[3]/div/div[2]/div/a/img", wait=10).click()
+
+
+class DVDnBlue(PageObject):
+    def __init__(self, driver: webdriver.Chrome):
+        self.driver = driver
+
+    def click_first_choice(self):
+        self.find_element_click_element_by_css_selector(".lister-item:nth-child(1) .loadlate", wait=10).click()

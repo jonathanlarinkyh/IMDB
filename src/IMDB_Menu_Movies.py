@@ -147,8 +147,8 @@ class IMDBReleaseCalendar(unittest.TestCase):
         second_page.click_first_choice()
         time.sleep(1)
         second_page.click_director()
-        main_page.page_whole_down()
         time.sleep(1)
+        main_page.page_whole_down()
         second_page.click_clear_history()
 
     def test_release_calendar_movie_history_clickable(self): #need to check why it works and not
@@ -158,6 +158,59 @@ class IMDBReleaseCalendar(unittest.TestCase):
         second_page = page.ReleaseCalendar(self.driver)
         second_page.click_first_choice()
         time.sleep(1)
+        main_page.page_whole_down()
+        time.sleep(1)
+        second_page.history_clickable_first_image()
+
+    def tearDown(self):
+        self.driver.close()
+
+
+class IMDBDVDnBlueRayReleases(unittest.TestCase):
+    def setUp(self):
+        self.driver = web_factory()
+        self.driver.get("https://www.imdb.com/")
+
+    def test_dvd_blue_click_first_choice(self):
+        main_page = page.IMDBMenuMovies(self.driver)
+        main_page.click_menu_dd()
+        main_page.click_menu_dd_dvd_blue_releases()
+
+        second_page = page.DVDnBlue(self.driver)
+        second_page.click_first_choice()
+
+    def test_dvd_blue_click_director(self):
+        main_page = page.IMDBMenuMovies(self.driver)
+        main_page.click_menu_dd()
+        main_page.click_menu_dd_dvd_blue_releases()
+
+        second_page = page.DVDnBlue(self.driver)
+        second_page.click_first_choice()
+        second_page = page.ReleaseCalendar(self.driver)
+        second_page.click_director()
+
+    def test_dvd_blue_click_director_clear(self):
+        main_page = page.IMDBMenuMovies(self.driver)
+        main_page.click_menu_dd()
+        main_page.click_menu_dd_dvd_blue_releases()
+
+        second_page = page.DVDnBlue(self.driver)
+        second_page.click_first_choice()
+        second_page = page.ReleaseCalendar(self.driver)
+        second_page.click_director()
+        time.sleep(3)
+        main_page.page_whole_down()
+        second_page.click_clear_history()
+
+    def test_dvd_blue_history_first_click(self):
+        main_page = page.IMDBMenuMovies(self.driver)
+        main_page.click_menu_dd()
+        main_page.click_menu_dd_dvd_blue_releases()
+
+        second_page = page.DVDnBlue(self.driver)
+        second_page.click_first_choice()
+        second_page = page.ReleaseCalendar(self.driver)
+        time.sleep(3)
         main_page.page_whole_down()
         time.sleep(1)
         second_page.history_clickable_first_image()
