@@ -17,6 +17,7 @@ import page
 import HtmlTestRunner
 from selenium.webdriver.support.ui import Select
 import getpass
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 WEBDRIVER = "CHROME"
@@ -95,11 +96,15 @@ class IMDBCelebsTVShows(unittest.TestCase):
     targetURL0 = "https://www.imdb.com/?ref_=nv_home"
     targetURL1 = "https://www.imdb.com/search/name/?birth_monthday=" + datetime.now().strftime("%m-%d") \
                  + "&ref_=nv_cel_brn"
-    targetURL2 = "https://www.imdb.com/search/name/?gender=male,female&sort=birth_date,asc&ref_=rlm"
-    targetURL3 = "https://www.imdb.com/list/ls094369917/?ref_=ls_mv_sm"
-    targetURL4 = "https://help.imdb.com/article/imdb/track-movies-tv/ratings-faq/G67Y87TFYYP6TWAV#"
-    targetURL5 = "https://www.imdb.com/search/title/?title_type=tv_series,tv_miniseries&genres=documentary&sort=runtime,asc&start=51&view=simple"
-    targetURL6 = "https://www.imdb.com/ap/cvf/request?arb="
+    targetURL2 = "https://www.imdb.com/search/name/?birth_monthday=" + datetime.now().strftime("%m-%d") + \
+                     "&sort=death_date,asc&ref_=rlm"
+
+    targetURL3 = "https://www.imdb.com/search/name/?gender=male,female&sort=birth_date,asc&ref_=rlm"
+    targetURL4 = "https://www.imdb.com/imdbpicks/prime-video-originals/ls094369917/mediaviewer/rm1272830721/undefined?ref_=ls_mv_sm"
+    targetURL5 = "https://help.imdb.com/article/imdb/track-movies-tv/ratings-faq/G67Y87TFYYP6TWAV#"
+
+    targetURL6 = "https://www.imdb.com/search/title/?title_type=tv_series,tv_miniseries&genres=documentary&sort=runtime,asc&start=51&view=simple"
+    targetURL7 = "https://www.imdb.com/news/top?ref_=nwc_sb_nwc_sm"
     def setUp(self):
         self.driver = webdriver_factory()
         print("4")
@@ -117,12 +122,21 @@ class IMDBCelebsTVShows(unittest.TestCase):
         menu = page.Menu(self.driver)
         self.listener.get_test_method_name("_celebs_born_today", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
         menu.click_menu()
-        #time.sleep(5)
         wait = WebDriverWait(self.driver, 10)
         element = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Born Today")))
         element.click()
         #main_page.click_born_today()
         self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL1)
+
+    @print_name
+    def test_celebs_born_today_death(self):
+        main_page = page.CelebsBornToday(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_celebs_born_today_death", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_born_today()
+        main_page.click_death_date()
+        self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL2)
 
     @print_name
     def test_celebs_most_popular(self):
@@ -138,7 +152,18 @@ class IMDBCelebsTVShows(unittest.TestCase):
 
         for i in range(15):
             main_page.click_page_down()
-        self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL2)
+        self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL3)
+
+    @print_name
+    def test_celebs_most_popular_death(self):
+        main_page = page.CelebsMostPopular(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_celebs_most_popular_death", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_most_popular()
+        main_page.click_death_date()
+        assert self.driver.find_element_by_xpath("//a[contains(.,'Death Date')]").text == "Death Date"
+
 
     @print_name
     def test_celebs_celebrity_news(self):
@@ -154,12 +179,26 @@ class IMDBCelebsTVShows(unittest.TestCase):
         for i in range(15):
             main_page.click_page_down()
         main_page.click_load_more()
-       # time.sleep(3)
         for i in range(15):
             main_page.click_page_down()
-        #time.sleep(5)
         assert self.driver.find_element_by_xpath("//h3[contains(.,'Recently Viewed')]").text == "Recently Viewed"
 
+    @print_name
+    def test_celebs_celebrity_indie_news(self):
+        main_page = page.CelebsCelebrityNews(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_celebs_celebrity_indie_news", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+
+        main_page.click_celebrity_news()
+        for l in range(2):
+            main_page.click_page_down()
+        main_page.click_indie_news()
+        for l in range(3):
+            for i in range(15):
+                main_page.click_page_down()
+            main_page.click_load_more()
+        assert self.driver.find_element_by_xpath("//h3[contains(.,'Recently Viewed')]").text == "Recently Viewed"
 
     @print_name
     def test_tvshows_whats_on_tv(self):
@@ -168,19 +207,27 @@ class IMDBCelebsTVShows(unittest.TestCase):
         self.listener.get_test_method_name("_tvshows_whats_on_tv", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
         menu.click_menu()
         main_page.click_whats_on_tv()
-        #time.sleep(2)
         for i in range(15):
             main_page.click_page_down()
         main_page.click_see_full_gallery()
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.visibility_of_element_located((By.XPATH, ".article:nth-child(27) .position_bottom")))
+        """wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".article:nth-child(29) .position_bottom")))"""
         main_page.click_grid()
-       # time.sleep(3)
-        self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL3)
+        self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL4)
 
     @print_name
-    def test_tcshows_top_rated(self):
+    def test_tvshows_whats_on_tv_twitter(self):
+        main_page = page.TvshowsWhatsOnTV(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_tvshows_whats_on_tv", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_whats_on_tv()
+        main_page.choose_twitter()
+        main_page.click_page_down()
 
+
+    @print_name
+    def test_tvshows_top_rated(self):
         main_page = page.TvshowsTopRated(self.driver)
         menu = page.Menu(self.driver)
         self.listener.get_test_method_name("_tvshows_top_rated", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
@@ -194,11 +241,21 @@ class IMDBCelebsTVShows(unittest.TestCase):
         wait = WebDriverWait(self.driver, 10)
         element = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Learn more about how list ranking is determined.")))
         element.click()
-        self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL4)
-
+        self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL5)
 
     @print_name
-    def test_tcshows_most_popular(self):
+    def test_tvshows_top_rated_lowest(self):
+        main_page = page.TvshowsTopRated(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_tvshows_top_rated_lowest", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_top_rated()
+        main_page.click_lowest_rated()
+        main_page.click_add_to_watchlist()
+        assert self.driver.find_element_by_link_text("Create a New Account").text == "Create a New Account"
+
+    @print_name
+    def test_tvshows_most_popular(self):
         main_page = page.TvshowsMostPopular(self.driver)
         menu = page.Menu(self.driver)
         self.listener.get_test_method_name("_tvshows_most_popular", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
@@ -208,10 +265,25 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_runtime()
         main_page.click_next()
         main_page.click_compact()
-        self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL5)
+        self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL6)
 
     @print_name
-    def test_tcshows_browse_tvshow(self):
+    def test_tvshows_most_popular_share(self):
+        main_page = page.TvshowsMostPopular(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_tvshows_most_popular_share", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_most_popular()
+        main_page.click_share()
+        main_page.click_copy()
+        main_page.click_search_field()
+        main_page.copy_text()
+        main_page.click_search_button()
+        assert self.driver.find_element_by_xpath("//h3[contains(.,'Recently Viewed')]").text == "Recently Viewed"
+
+
+    @print_name
+    def test_tvshows_browse_tvshow(self):
         main_page = page.TvshowsBrowseTvshows(self.driver)
         menu = page.Menu(self.driver)
         self.listener.get_test_method_name("_tvshows_browse_tvshow", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
@@ -220,8 +292,20 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_search()
         main_page.click_searchfield()
         main_page.click_go()
+        main_page.click_page_down()
+        assert self.driver.find_element_by_link_text("laser-ball").text == "laser-ball"
 
-        assert self.driver.find_element_by_link_text("laser-ball")
+    @print_name
+    def test_tcshows_browse_tvshow_bmovie(self):
+        main_page = page.TvshowsBrowseTvshows(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_tvshows_browse_tvshow_bmovie", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_browse()
+        main_page.click_bmovie()
+        main_page.choose_year()
+        assert self.driver.find_element_by_xpath("//*[@id='main']/div/div[2]/div[3]")
+
 
     @print_name
     def test_tvshows_tvnews(self):
@@ -232,6 +316,16 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_tvnews()
         main_page.click_second_article()
         assert self.driver.find_element_by_xpath("//section[@id='news-article-list']/article[2]/header/h2/a")
+
+    @print_name
+    def test_tvshows_tvnews_top(self):
+        main_page = page.TvshowsTvnews(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_tvshows_tvnews_top", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_tvnews()
+        main_page.click_top_news()
+        self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL7)
 
 
     @print_name
@@ -261,16 +355,9 @@ class IMDBCelebsTVShows(unittest.TestCase):
         time.sleep(5)
         if self.driver.find_element_by_xpath("//*[@id='cvf-page-content']/div/div"):
             main_page.click_hear_letters()
+            locator = self.driver.find_element_by_xpath("//*[@id='cvf-page-content']/div/div/div/div[2]/div/audio").click()
+            self.driver.do_command("doubleClickAt", [locator, 0, 20])
             time.sleep(5)
-            el = self.driver.find_element_by_xpath("//*[@id='cvf-page-content']/div/div/div/div[2]/div/audio")
-            action = webdriver.common.ActionChains(self.driver)
-            action.move_to_element_with_offset(el, 0, 5)
-            action.click()
-            action.perform()
-
-
-            time.sleep(5)
-
 
         else:
             assert self.driver.find_element_by_xpath("//a[contains(text(),'Sign-In')]")

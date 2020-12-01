@@ -40,7 +40,11 @@ class CelebsBornToday(PageObject):
         self.driver = driver
 
     def click_born_today(self):
-        self.driver.find_element_by_xpath("//a[contains(.,'Born Today')]").click()
+        self.driver.find_element_by_link_text("Born Today").click()
+
+    def click_death_date(self):
+        self.driver.find_element_by_xpath("//a[contains(.,'Death Date')]").click()
+
 
 
 class CelebsMostPopular(PageObject):
@@ -56,16 +60,24 @@ class CelebsMostPopular(PageObject):
     def click_clear_history(self):
         self.driver.find_element_by_css_selector("#clear_rvi")
 
+    def click_death_date(self):
+        self.driver.find_element_by_xpath("//a[contains(.,'Death Date')]")
+
+
+
 
 class CelebsCelebrityNews(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         self.driver = driver
 
-    #def click_celebrity_news(self):
-        #self.driver.find_element_by_xpath("//a[contains(.,'Celebrity News')]").click()
+    def click_celebrity_news(self):
+        self.driver.find_element_by_link_text("Celebrity News").click()
 
     def click_load_more(self):
         self.driver.find_element_by_xpath("//button[@id='news-load-more']").click()
+
+    def click_indie_news(self):
+        self.driver.find_element_by_xpath("//a[contains(.,'See All Indie News »')]").click()
 
 
 class TvshowsWhatsOnTV(PageObject):
@@ -76,10 +88,13 @@ class TvshowsWhatsOnTV(PageObject):
         self.driver.find_element_by_link_text("What's on TV & Streaming").click()
 
     def click_see_full_gallery(self):
-        self.driver.find_element_by_css_selector(".article:nth-child(27) .position_bottom").click()
+        self.driver.find_element_by_css_selector(".article:nth-child(29) .position_bottom").click()
 
     def click_grid(self):
         self.driver.find_element_by_css_selector(".ipc-icon--grid-view").click()
+
+    def choose_twitter(self):
+        self.driver.find_element_by_xpath("/html/body/div/div[2]/div[2]").send_keys(Keys.PAGE_DOWN)
 
 
 class TvshowsTopRated(PageObject):
@@ -95,6 +110,11 @@ class TvshowsTopRated(PageObject):
     def click_number_of_ratings(self):
         Select(self.driver.find_element_by_id("lister-sort-by-options")).select_by_visible_text("Number of Ratings")
 
+    def click_lowest_rated(self):
+        self.driver.find_element_by_link_text("Lowest Rated Movies").click()
+
+    def click_add_to_watchlist(self):
+        self.driver.find_element_by_css_selector("tr:nth-child(1) .wl-ribbon").click()
 
 class TvshowsMostPopular(PageObject):
     def __init__(self, driver: webdriver.Chrome):
@@ -115,6 +135,23 @@ class TvshowsMostPopular(PageObject):
     def click_compact(self):
         self.driver.find_element_by_xpath("//a[contains(text(),'Compact')]").click()
 
+    def click_share(self):
+        self.driver.find_element_by_xpath("//button[contains(.,'SHARE')]").click()
+
+    def click_copy(self):
+        self.driver.find_element_by_xpath("//input[@value='https://www.imdb.com/chart/tvmeter/']").click()
+
+    def click_search_field(self):
+        self.driver.find_element_by_id("suggestion-search").click()
+
+    def copy_text(self):
+        self.driver.find_element_by_id("suggestion-search").send_keys(Keys.CONTROL + "v")
+
+
+    def click_search_button(self):
+        self.driver.find_element_by_id("suggestion-search").send_keys(Keys.ENTER)
+
+
 
 class TvshowsBrowseTvshows(PageObject):
     def __init__(self, driver: webdriver.Chrome):
@@ -132,6 +169,17 @@ class TvshowsBrowseTvshows(PageObject):
     def click_go(self):
         self.driver.find_element_by_css_selector(".btn").click()
 
+    def click_bmovie(self):
+        self.driver.find_element_by_xpath("//a[contains(text(),'B-Movie')]").click()
+
+    def click_murder(self):
+        self.driver.find_element_by_xpath("//label[12]/input")
+
+    def choose_year(self):
+        Select(self.driver.find_element_by_xpath("//select[@name='sort']")).select_by_visible_text("Year")
+
+
+
 
 class TvshowsTvnews(PageObject):
     def __init__(self, driver: webdriver.Chrome):
@@ -143,6 +191,8 @@ class TvshowsTvnews(PageObject):
     def click_second_article(self):
         self.driver.find_element_by_xpath("//section[@id='news-article-list']/article[2]/header/h2/a").click()
 
+    def click_top_news(self):
+        self.driver.find_element_by_xpath("//a[contains(.,'See All Top News »')]").click()
 
 class TvshowsIndian(PageObject):
     def __init__(self, driver: webdriver.Chrome):
