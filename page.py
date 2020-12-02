@@ -64,3 +64,17 @@ class IMDBMenuWatch(PageObject):
     def click_dd_menu_podcasts(self):
         self.find_element_click_element_by_xpath("//a[contains(@href, '/podcasts/?ref_=nv_pod')]", wait=20).click()
 
+
+class IMDBWhatToWatch(PageObject):
+    def __init__(self, driver: webdriver.Chrome):
+        self.driver = driver
+
+    def click_most_popular(self):
+        self.find_element_click_element_by_xpath("//li[5]/span", wait=10).click()
+
+    def click_fan_favorites(self):
+        self.find_element_click_element_by_css_selector(".ipc-tab:nth-child(2) > span", wait=10).click()
+
+    def click_10th_choice(self):
+        self.find_element_click_element_by_xpath("//div[10]/div[3]/button/div", wait=10).click()
+

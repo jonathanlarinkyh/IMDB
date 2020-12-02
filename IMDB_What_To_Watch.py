@@ -1,6 +1,12 @@
 import unittest
 from selenium import webdriver
+import time
 import page
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.support.ui import WebDriverWait
+# import HtmlTestRunner
 
 
 def web_settings():
@@ -11,7 +17,7 @@ def web_settings():
     return driver
 
 
-class IMDBTestCase(unittest.TestCase):
+class foo_IMDBNavTestCase(unittest.TestCase):
 
     def setUp(self):
         """ Startar testen från IMDB startsida. """
@@ -57,6 +63,31 @@ class IMDBTestCase(unittest.TestCase):
         main_page.click_dd_menu()
         main_page.click_dd_menu_podcasts()
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/podcasts/?ref_=nv_pod")
+
+    def tearDown(self):
+        self.driver.close()
+
+
+class IMDBWhatToWatchTestCase(unittest.TestCase):
+
+    def setUp(self):
+        """ Startar testen från IMDB startsida. """
+        self.driver = web_settings()
+        self.driver.get("https://www.imdb.com")
+
+    def test_what_to_watch(self):
+        """ Testar navigation i ' What to watch' """
+        main_page = page.IMDBMenuWatch(self.driver)
+        second_page = page.IMDBWhatToWatch(self.driver)
+
+        main_page.click_dd_menu()
+        main_page.click_dd_menu_whats_new()
+        second_page.click_fan_favorites()
+        time.sleep(3)
+        main_page.page_whole_down()
+        main_page.page_whole_up()
+        second_page.click_most_popular()
+        time.sleep(2)
 
     def tearDown(self):
         self.driver.close()
