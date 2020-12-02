@@ -122,10 +122,10 @@ class IMDBCelebsTVShows(unittest.TestCase):
         menu = page.Menu(self.driver)
         self.listener.get_test_method_name("_celebs_born_today", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
         menu.click_menu()
-        wait = WebDriverWait(self.driver, 10)
-        element = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Born Today")))
-        element.click()
-        #main_page.click_born_today()
+        #wait = WebDriverWait(self.driver, 10)
+        #element = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Born Today")))
+        #element.click()
+        main_page.click_born_today()
         self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL1)
 
     @print_name
@@ -146,7 +146,6 @@ class IMDBCelebsTVShows(unittest.TestCase):
         menu.click_menu()
         main_page.click_most_popular()
         main_page.click_birth_date()
-        #time.sleep(5)
         wait = WebDriverWait(self.driver, 10)
         wait.until(EC.visibility_of_element_located((By.XPATH, "//div[2]/a[3]")))
 
@@ -171,10 +170,10 @@ class IMDBCelebsTVShows(unittest.TestCase):
         menu = page.Menu(self.driver)
         self.listener.get_test_method_name("_celebs_celebrity_news", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
         menu.click_menu()
-        wait = WebDriverWait(self.driver, 10)
-        element = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Celebrity News")))
-        element.click()
-        #main_page.click_celebrity_news()
+        #wait = WebDriverWait(self.driver, 10)
+        #element = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Celebrity News")))
+        #element.click()
+        main_page.click_celebrity_news()
         #time.sleep(2)
         for i in range(15):
             main_page.click_page_down()
@@ -340,28 +339,51 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_descending()
         for i in range(3):
             self.driver.back()
-        #assert self.driver.find_element_by_link_text("data;")
         self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL0)
 
     @print_name
-    def test_create_user(self):
+    def test_tvshows_indian_clear_history(self):
+        main_page = page.TvshowsIndian(self.driver)
+        menu = page.Menu(self.driver)
+        self.listener.get_test_method_name("_tvshows_indian_clear_history", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        menu.click_menu()
+        main_page.click_indian_tv()
+        main_page.click_most_anticipated()
+        main_page.click_second_on_list()
+        self.driver.back()
+        for i in range(2):
+            main_page.click_page_down()
+        main_page.click_clear_history()
+        assert self.driver.find_element_by_xpath("//a[contains(text(),'Press Room')]").text == "Press Room"
+
+
+
+    @print_name
+    def test_create_user_ascii(self):
         main_page = page.CreateUser(self.driver)
-        self.listener.get_test_method_name("_create_user", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        self.listener.get_test_method_name("_create_user_ascii", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
         main_page.click_sign_in()
         main_page.click_create_account()
-        main_page.generate_name_email()
+        main_page.generate_name_email_ascii()
         main_page.generate_password()
         main_page.create()
-        time.sleep(5)
-        if self.driver.find_element_by_xpath("//*[@id='cvf-page-content']/div/div"):
-            main_page.click_hear_letters()
-            locator = self.driver.find_element_by_xpath("//*[@id='cvf-page-content']/div/div/div/div[2]/div/audio").click()
-            self.driver.do_command("doubleClickAt", [locator, 0, 20])
-            time.sleep(5)
+        main_page.click_hear_letters()
+        main_page.click_play()
 
-        else:
-            assert self.driver.find_element_by_xpath("//a[contains(text(),'Sign-In')]")
-            time.sleep(4)
+
+
+    @print_name
+    def test_create_user_chr(self):
+        main_page = page.CreateUser(self.driver)
+        self.listener.get_test_method_name("_create_user_chr", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
+        main_page.click_sign_in()
+        main_page.click_create_account()
+        main_page.generate_name_email_chr()
+        main_page.generate_password()
+        main_page.create()
+        assert self.driver.find_element_by_xpath("//a[contains(text(),'Sign-In')]")
+
+
 
 
     def tearDown(self):
