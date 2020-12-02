@@ -41,6 +41,8 @@ class IMDBMainPage(PageObject):
         self.driver.save_screenshot("SC_Amaj/Menu/" + "Menu_SC " + time.asctime().replace(":", "") + ".png")
 
 
+####################### Section coded by AMAJ. Awards and Events in Menu #################
+
 class IMDB_menu_awards(PageObject):
 
     def __init__(self, driver: webdriver.Chrome):
@@ -145,6 +147,6 @@ class IMDB_Menu_Oscars(PageObject):
     def click_year_in_winners(self):
         self.find_element_clickable_element_by_xpath("//a[normalize-space()='2020']", wait=10).click()
 
-
         time.sleep(5)
 
+############################# Code section for Awards and Events completed. Amaj ##################
