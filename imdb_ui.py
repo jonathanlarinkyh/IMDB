@@ -1,7 +1,7 @@
 import time
 import unittest
 from datetime import datetime
-
+import calendar
 import HtmlTestRunner
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
@@ -11,6 +11,8 @@ import imdb_page
 options = webdriver.ChromeOptions()
 options.add_argument('ignore-certificate-errors')
 print(help(EC.presence_of_all_elements_located))
+
+WEBDRIVER = "CHROME"
 
 
 def webdriver_chrome():
@@ -28,8 +30,25 @@ def webdriver_chrome_headless():
     return driver
 
 
+def webdriver_firefox():
+    driver = webdriver
+    print("1")
+    driver.implicitly_wait(10)
+    print("2")
+    driver.maximize_window()
+    print("3")
+    return driver
+
+
 def webdriver_factory():
-    return webdriver_chrome_headless()
+    if WEBDRIVER == "CHROME":
+        return webdriver_chrome()
+    elif WEBDRIVER == "CHROME_HEADLESS":
+        return webdriver_chrome_headless()
+    elif WEBDRIVER == "FIREFOX":
+        return webdriver_firefox()
+    else:
+        return webdriver_chrome()
 
 
 class IMDBTest(unittest.TestCase):
@@ -68,6 +87,8 @@ class test_IMBD_Nav(unittest.TestCase):
         self.driver.close()
 
 
+# This section holds testing for Awards and Events in Main Menu.
+# Tests are being executed by Amaj.
 class test_imdb_menu(unittest.TestCase):
 
     def __init__(self, methodName: str = ...):
@@ -77,25 +98,25 @@ class test_imdb_menu(unittest.TestCase):
         self.driver = webdriver_chrome()
         self.driver.get("https://www.imdb.com")
 
-    def est_click_menu(self):
+    def foo_test_click_menu(self):
         main_page = imdb_page.IMDBMainPage(self.driver)
         main_page.click_menu_dd()
 
-    def test_001_menu_oscars(self):
+    def foo_test_001_menu_oscars(self):
         main_page = imdb_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         main_page.click_oscars()
 
         time.sleep(5)
 
-    def test_002_menu_BPW(self):
+    def foo_test_002_menu_BPW(self):
         main_page = imdb_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         time.sleep(2)
         main_page.click_best_picture_Winner()
         time.sleep(5)
 
-    def test_003_menu_Golden_Globes(self):
+    def foo_test_003_menu_Golden_Globes(self):
         main_page = imdb_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         time.sleep(2)
@@ -103,7 +124,7 @@ class test_imdb_menu(unittest.TestCase):
 
         time.sleep(5)
 
-    def test_004_menu_Emmys(self):
+    def foo_test_004_menu_Emmys(self):
         main_page = imdb_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         time.sleep(2)
@@ -113,7 +134,7 @@ class test_imdb_menu(unittest.TestCase):
         self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/Emmys.png")
         time.sleep(5)
 
-    def test_005_menu_STARmeter_Awards(self):
+    def foo_test_005_menu_STARmeter_Awards(self):
         main_page = imdb_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         time.sleep(2)
@@ -123,7 +144,7 @@ class test_imdb_menu(unittest.TestCase):
         self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/Starmeter Award.png")
         time.sleep(5)
 
-    def test_006_menu_SD_Comic_Con(self):
+    def foo_test_006_menu_SD_Comic_Con(self):
         main_page = imdb_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         time.sleep(2)
@@ -133,7 +154,7 @@ class test_imdb_menu(unittest.TestCase):
         self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/SD Comic Con.png")
         time.sleep(5)
 
-    def test_007_menu_NY_Comic_Con(self):
+    def foo_test_007_menu_NY_Comic_Con(self):
         main_page = imdb_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         time.sleep(2)
@@ -143,7 +164,7 @@ class test_imdb_menu(unittest.TestCase):
         self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/NY Comic Con.png")
         time.sleep(5)
 
-    def test_008_menu_Sundance_FF(self):
+    def foo_test_008_menu_Sundance_FF(self):
         main_page = imdb_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         time.sleep(2)
@@ -153,7 +174,7 @@ class test_imdb_menu(unittest.TestCase):
         self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/Sundance FF.png")
         time.sleep(5)
 
-    def test_009_menu_Toronto_Intl_FF(self):
+    def foo_test_009_menu_Toronto_Intl_FF(self):
         main_page = imdb_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         time.sleep(2)
@@ -163,7 +184,7 @@ class test_imdb_menu(unittest.TestCase):
         self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/Toronto Intl FF.png")
         time.sleep(5)
 
-    def test_009_menu_AWARD_CENTRAL(self):
+    def foo_test_009_menu_AWARD_CENTRAL(self):
         main_page = imdb_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         time.sleep(2)
@@ -174,7 +195,7 @@ class test_imdb_menu(unittest.TestCase):
         self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/Award Central.png")
         time.sleep(5)
 
-    def test_010_menu_Festival_Central(self):
+    def foo_test_010_menu_Festival_Central(self):
         main_page = imdb_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         time.sleep(2)
@@ -185,7 +206,7 @@ class test_imdb_menu(unittest.TestCase):
         self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/Festival Central.png")
         time.sleep(5)
 
-    def test_011_menu_All_Events(self):
+    def foo_test_011_menu_All_Events(self):
         main_page = imdb_page.IMDB_menu_awards(self.driver)
         main_page.click_menu_dd()
         time.sleep(2)
@@ -210,33 +231,35 @@ class test_Awards_and_Events_Oscars(unittest.TestCase):
         self.driver.get("https://www.imdb.com")
 
     def tearDown(self):
-#        for method, error in self.outcome.errors:
-#            if error:  # Screenshot will be taken if there's an error raised
+        #  for method, error in self.outcome.errors:
+        #     if error:  # Screenshot will be taken if there's an error raised
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         name = 'reports/screenshot-%s.png' % now
         self.driver.get_screenshot_as_file(name)
 
         self.driver.quit()
 
-    def test_elements_of_oscars(self):
+    def foo_test_elements_of_oscars(self):
         main_page = imdb_page.IMDB_Menu_Oscars(self.driver)
         main_page.click_oscars_menu()
         main_page.click_oscars_main()
 
-    def test_winners_in_oscars(self):
+    def foo_test_winners_in_oscars(self):
         main_page = imdb_page.IMDB_Menu_Oscars(self.driver)
         main_page.click_oscars_menu()
         main_page.click_winners_in_oscar()
 
-    def test_year_in_winners(self):
+    def foo_test_year_in_winners(self):
         main_page = imdb_page.IMDB_Menu_Oscars(self.driver)
         main_page.click_oscars_menu()
         main_page.click_winners_in_oscar()
         main_page.click_year_in_winners()
         self.assertTrue(False)
 
+# Tests conducted by Amaj for Awards and Events Ends here.
+#########################################################
+
 
 if __name__ == '__main__':
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_name="IMDB_Tests_Amaj",
-                                                           output='Reports/'))
-
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_name="IMDB_UI_Tests_PVT2019",
+                                                           output='Reports/', verbosity=2))
