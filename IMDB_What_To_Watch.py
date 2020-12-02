@@ -85,6 +85,7 @@ class IMDBWhatToWatchTestCase(unittest.TestCase):
         second_page.click_fan_favorites()
         time.sleep(3)
         main_page.page_whole_down()
+        time.sleep(1)
         main_page.page_whole_up()
         second_page.click_most_popular()
         time.sleep(2)
@@ -95,8 +96,3 @@ class IMDBWhatToWatchTestCase(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
-
-
-""" functions = page.PageObject(self.driver)
-functions.page_whole_down()
-main_page.click_clear_history() """
