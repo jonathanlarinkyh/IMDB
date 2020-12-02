@@ -1,64 +1,71 @@
 import unittest
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-import time
+import page
+
+
+def web_settings():
+    driver = webdriver.Chrome()
+    driver.implicitly_wait(10)
+    driver.maximize_window()
+
+    return driver
 
 
 class IMDBTestCase(unittest.TestCase):
 
     def setUp(self):
-        """Skapar en Chrome instans"""
-        self.driver = webdriver.Chrome()
-        self.driver.maximize_window()
-        self.addCleanup(self.driver.quit)
+        """ Startar testen från IMDB startsida. """
+        self.driver = web_settings()
+        self.driver.get("https://www.imdb.com")
+
+    def test_drop_down_menu(self):
+        """ Testar dropdown-menu från startsidan. """
+        main_page = page.IMDBMenuWatch(self.driver)
+        main_page.click_dd_menu()
 
     def test_whats_new(self):
         """ Testar titeln i 'What to watch'. """
-        self.driver.get('https://www.imdb.com')
-        self.driver.find_element_by_xpath("//label[@id='imdbHeader-navDrawerOpen--desktop']").click()
-        time.sleep(2)
-        self.driver.find_element_by_xpath("//div[2]/span/div/div/ul/a").click()
-        time.sleep(2)
-        assert self.driver.find_element_by_css_selector(".ipc-title--page-title > .ipc-title__text").text == "What to Watch"
+        main_page = page.IMDBMenuWatch(self.driver)
+        main_page.click_dd_menu()
+        main_page.click_dd_menu_whats_new()
+        self.assertEqual(self.driver.current_url, "https://www.imdb.com/what-to-watch/?ref_=nv_watch")
 
     def test_latest_trailers(self):
         """ Testar titeln i 'Latest Trailers'. """
-        self.driver.get('https://www.imdb.com')
-        self.driver.find_element_by_xpath("//label[@id='imdbHeader-navDrawerOpen--desktop']").click()
-        time.sleep(2)
-        self.driver.find_element_by_xpath("//div[2]/span/div/div/ul/a[2]").click()
-        time.sleep(2)
-        assert self.driver.find_element_by_css_selector(".ipc-title__text").text == "Movie & TV trailers"
+        main_page = page.IMDBMenuWatch(self.driver)
+        main_page.click_dd_menu()
+        main_page.click_dd_menu_latest_trailers()
+        self.assertEqual(self.driver.current_url, "https://www.imdb.com/trailers/?ref_=nv_mv_tr")
 
-    def test_IMDB_Originals(self):
+    def test_originals(self):
         """ Testar titeln i 'IMDb Originals'. """
-        self.driver.get('https://www.imdb.com')
-        self.driver.find_element_by_xpath("//label[@id='imdbHeader-navDrawerOpen--desktop']").click()
-        time.sleep(2)
-        self.driver.find_element_by_link_text("IMDb Originals").click()
-        time.sleep(2)
-        assert self.driver.find_element_by_css_selector("a > h1").text == "IMDb ORIGINALS"
+        main_page = page.IMDBMenuWatch(self.driver)
+        main_page.click_dd_menu()
+        main_page.click_dd_menu_originals()
+        self.assertEqual(self.driver.current_url, "https://www.imdb.com/originals/?ref_=nv_sf_ori")
 
-    def test_IMDB_Picks(self):
+    def test_picks(self):
         """ Testar titeln i 'IMDb Picks'. """
-        self.driver.get('https://www.imdb.com')
-        self.driver.find_element_by_xpath("//label[@id='imdbHeader-navDrawerOpen--desktop']").click()
-        time.sleep(2)
-        self.driver.find_element_by_link_text("IMDb Picks").click()
-        time.sleep(2)
-        assert self.driver.find_element_by_xpath("//h1").text == "IMDb PICKS"
+        main_page = page.IMDBMenuWatch(self.driver)
+        main_page.click_dd_menu()
+        main_page.click_dd_menu_picks()
+        self.assertEqual(self.driver.current_url, "https://www.imdb.com/imdbpicks/?ref_=nv_pi")
 
-    def test_IMDB_Podcasts(self):
+    def test_podcasts(self):
         """ Testar titeln i 'IMDb Podscasts'. """
-        self.driver.get('https://www.imdb.com')
-        self.driver.find_element_by_xpath("//label[@id='imdbHeader-navDrawerOpen--desktop']").click()
-        time.sleep(2)
-        self.driver.find_element_by_link_text("IMDb Podcasts").click()
-        time.sleep(2)
-        assert self.driver.find_element_by_xpath("//h1").text == "IMDb PODCASTS"
-        self.driver.back()
-        time.sleep(2)
+        main_page = page.IMDBMenuWatch(self.driver)
+        main_page.click_dd_menu()
+        main_page.click_dd_menu_podcasts()
+        self.assertEqual(self.driver.current_url, "https://www.imdb.com/podcasts/?ref_=nv_pod")
+
+    def tearDown(self):
+        self.driver.close()
 
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
+
+
+""" functions = page.PageObject(self.driver)
+functions.page_whole_down()
+main_page.click_clear_history() """
