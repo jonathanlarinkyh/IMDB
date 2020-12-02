@@ -21,13 +21,13 @@ class PageObject:
     # def accept_cookies(self):
     #     self.driver.find_element_by_id("cn-accept-cookie").click()
 
-    def find_element_clickable_element_by_xpath(self, selector, wait=0):
+    def find_element_clickable_element_by_xpath(self, selector, wait=10):
         return WebDriverWait(self.driver, wait).until(EC.element_to_be_clickable((By.XPATH, selector)))
 
-    def find_element_clickable_element_by_css_selector(self, selector, wait=0):
+    def find_element_clickable_element_by_css_selector(self, selector, wait=10):
         return WebDriverWait(self.driver, wait).until(EC.element_to_be_clickable((By.CSS_SELECTOR, selector)))
 
-    def find_visible_element_by_xpath(self, selector, wait=0):
+    def find_visible_element_by_xpath(self, selector, wait=10):
         return WebDriverWait(self.driver, wait).until(EC.visibility_of_element_located((By.XPATH, selector)))
 
 
@@ -137,10 +137,13 @@ class IMDB_Menu_Oscars(PageObject):
         time.sleep(5)
 
     def click_winners_in_oscar(self):
-        self.find_element_clickable_element_by_css_selector(" a[title='Winners'] span:nth-child(1)").click()
-        self.driver.save_screenshot("SC_Amaj/Oscars/" + "Winners_SC " + time.asctime().replace(":", "") + ".png")
+        self.find_element_clickable_element_by_xpath("//a[@href='/oscars/?ref_=nv_ev_acd']", wait=15).click()
+        self.find_element_clickable_element_by_xpath("//span[normalize-space()='WINNERS']", wait=5).click()
+        # self.driver.save_screenshot("SC_Amaj/Oscars/" + "Winners_SC " + time.asctime().replace(":", "") + ".png")
         time.sleep(5)
 
     def click_year_in_winners(self):
         self.find_element_clickable_element_by_xpath("//a[normalize-space()='2020']", wait=10).click()
+
+
         time.sleep(5)

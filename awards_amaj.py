@@ -1,3 +1,4 @@
+from datetime import datetime
 import time
 import aa_page
 import unittest
@@ -20,7 +21,7 @@ def webdriver_chrome():
 
 def webdriver_chrome_headless():
     options.headless = True
-    driver = webdriver.Chrome(chrome_options=options)
+    driver = webdriver.Chrome(options=options)
     driver.set_window_size(1920, 1080)
     driver.implicitly_wait(10)
     return driver
@@ -59,7 +60,7 @@ class test_IMBD_Nav(unittest.TestCase):
         self.driver = webdriver_chrome()
         self.driver.get("https://www.imdb.com")
 
-    def test_page_access(self):
+    def foo_test_page_access(self):
         main_page = self.driver.get("https://imdb.com")
 
     def tearDown(self):
@@ -72,10 +73,10 @@ class test_imdb_menu(unittest.TestCase):
         super().__init__(methodName)
 
     def setUp(self):
-        self.driver = webdriver_chrome_headless()
+        self.driver = webdriver_chrome()
         self.driver.get("https://www.imdb.com")
 
-    def foo_test_click_menu(self):
+    def est_click_menu(self):
         main_page = aa_page.IMDBMainPage(self.driver)
         main_page.click_menu_dd()
 
@@ -198,27 +199,42 @@ class test_imdb_menu(unittest.TestCase):
         self.driver.close()
 
 
-class test_Awards_and_Events_menu(unittest.TestCase):
+class test_Awards_and_Events_Oscars(unittest.TestCase):
 
     def __init__(self, methodName: str = ...):
         super().__init__(methodName)
 
     def setUp(self):
-        self.driver = webdriver_chrome_headless()
+        self.driver = webdriver_chrome()
         self.driver.get("https://www.imdb.com")
 
-    def test_elements_of_oscars(self):
+    def tearDown(self):
+#        for method, error in self.outcome.errors:
+#            if error:  # Screenshot will be taken if there's an error raised
+        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        name = 'reports/screenshot-%s.png' % now
+        self.driver.get_screenshot_as_file(name)
+
+        self.driver.quit()
+
+    def foo_test_elements_of_oscars(self):
         main_page = aa_page.IMDB_Menu_Oscars(self.driver)
         main_page.click_oscars_menu()
         main_page.click_oscars_main()
+
+    def foo_test_winners_in_oscars(self):
+        main_page = aa_page.IMDB_Menu_Oscars(self.driver)
+        main_page.click_oscars_menu()
+        main_page.click_winners_in_oscar()
+
+    def test_year_in_winners(self):
+        main_page = aa_page.IMDB_Menu_Oscars(self.driver)
+        main_page.click_oscars_menu()
         main_page.click_winners_in_oscar()
         main_page.click_year_in_winners()
-
-    def tearDown(self):
-        self.driver.close()
+        self.assertTrue(False)
 
 
 if __name__ == '__main__':
     unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_name="IMDB_Tests_Amaj",
-                                                           output='C:/Users/AmAj/Desktop/Python '
-                                                                  'Projects/IMDB/Jonathan/Reports'))
+                                                           output='Reports/'))
