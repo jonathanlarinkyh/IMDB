@@ -101,10 +101,10 @@ class CelebsCelebrityNews(PageObject):
         self.find_element_visible_element_by_link_text("Celebrity News", wait=10).click()
 
     def click_load_more(self):
-        self.find_element_visible_element_by_xpath("//button[@id='news-load-more']", wait=10).click()
+        self.find_element_clickable_element_by_xpath("//button[@id='news-load-more']", wait=10).click()
 
     def click_indie_news(self):
-        self.driver.find_element_by_xpath("//a[contains(.,'See All Indie News »')]").click()
+        self.find_element_clickable_element_by_xpath("//a[contains(.,'See All Indie News »')]").click()
 
 
 class TvshowsWhatsOnTV(PageObject):

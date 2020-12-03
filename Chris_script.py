@@ -75,7 +75,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         self.driver = webdriver_factory()
         self.driver.get("https://www.imdb.com/?ref_=nv_home")
 
-    def test_celebs_born_today(self):
+    def foo_test_celebs_born_today(self):
         main_page = imdb_page.CelebsBornToday(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -85,7 +85,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_born_today()
         self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL1)
 
-    def test_celebs_born_today_death(self):
+    def foo_test_celebs_born_today_death(self):
         main_page = imdb_page.CelebsBornToday(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -93,7 +93,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_death_date()
         self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL2)
 
-    def test_celebs_most_popular(self):
+    def foo_test_celebs_most_popular(self):
         main_page = imdb_page.CelebsMostPopular(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -103,7 +103,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
             main_page.page_down()
         self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL3)
 
-    def test_celebs_most_popular_death(self):
+    def foo_test_celebs_most_popular_death(self):
         main_page = imdb_page.CelebsMostPopular(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -138,7 +138,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
             main_page.click_load_more()
         assert self.driver.find_element_by_xpath("//h3[contains(.,'Recently Viewed')]").text == "Recently Viewed"
 
-    def test_tvshows_whats_on_tv(self):
+    def foo_test_tvshows_whats_on_tv(self):
         main_page = imdb_page.TvshowsWhatsOnTV(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -149,7 +149,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_grid()
         self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL4)
 
-    def test_tvshows_whats_on_tv_holidays(self):
+    def foo_test_tvshows_whats_on_tv_holidays(self):
         main_page = imdb_page.TvshowsWhatsOnTV(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -158,7 +158,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_holiday()
         self.assertTrue(self.driver.current_url, "https://www.imdb.com/whats-on-tv/holiday-tv-shows-movies/rg738826752/mediaviewer/rm3377125633/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=3c9deb43-b3f2-4d0c-8761-b0a25308fa9d&pf_rd_r=QDCMRQYV087S531F080X&pf_rd_s=center-1&pf_rd_t=60601&pf_rd_i=whats-on-tv")
 
-    def test_tvshows_top_rated(self):
+    def foo_test_tvshows_top_rated(self):
         main_page = imdb_page.TvshowsTopRated(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -173,7 +173,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         element.click()
         self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL5)
 
-    def test_tvshows_top_rated_lowest(self):
+    def foo_test_tvshows_top_rated_lowest(self):
         main_page = imdb_page.TvshowsTopRated(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -182,7 +182,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_add_to_watchlist()
         assert self.driver.find_element_by_link_text("Create a New Account").text == "Create a New Account"
 
-    def test_tvshows_most_popular(self):
+    def foo_test_tvshows_most_popular(self):
         main_page = imdb_page.TvshowsMostPopular(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -193,7 +193,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_compact()
         self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL6)
 
-    def test_tvshows_most_popular_share(self):
+    def foo_test_tvshows_most_popular_share(self):
         main_page = imdb_page.TvshowsMostPopular(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -205,7 +205,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_search_button()
         assert self.driver.find_element_by_xpath("//h3[contains(.,'Recently Viewed')]").text == "Recently Viewed"
 
-    def test_tvshows_browse_tvshow(self):
+    def foo_test_tvshows_browse_tvshow(self):
         main_page = imdb_page.TvshowsBrowseTvshows(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -216,7 +216,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.page_down()
         assert self.driver.find_element_by_link_text("laser-ball").text == "laser-ball"
 
-    def test_tcshows_browse_tvshow_bmovie(self):
+    def foo_test_tcshows_browse_tvshow_bmovie(self):
         main_page = imdb_page.TvshowsBrowseTvshows(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -225,7 +225,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.choose_year()
         assert self.driver.find_element_by_xpath("//*[@id='main']/div/div[2]/div[3]")
 
-    def test_tvshows_tvnews(self):
+    def foo_test_tvshows_tvnews(self):
         main_page = imdb_page.TvshowsTvnews(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -233,7 +233,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_second_article()
         assert self.driver.find_element_by_xpath("//section[@id='news-article-list']/article[2]/header/h2/a")
 
-    def test_tvshows_tvnews_top(self):
+    def foo_test_tvshows_tvnews_top(self):
         main_page = imdb_page.TvshowsTvnews(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -241,7 +241,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_top_news()
         self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL7)
 
-    def test_tvshows_indian(self):
+    def foo_test_tvshows_indian(self):
         main_page = imdb_page.TvshowsIndian(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -253,7 +253,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
             self.driver.back()
         self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL0)
 
-    def test_tvshows_indian_clear_history(self):
+    def foo_test_tvshows_indian_clear_history(self):
         main_page = imdb_page.TvshowsIndian(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
@@ -266,7 +266,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_clear_history()
         assert self.driver.find_element_by_xpath("//a[contains(text(),'Press Room')]").text == "Press Room"
 
-    def test_create_user_ascii(self):
+    def foo_test_create_user_ascii(self):
         main_page = imdb_page.CreateUser(self.driver)
         main_page.click_sign_in()
         main_page.click_create_account()
@@ -278,7 +278,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
         time.sleep(20)
         self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL8)
 
-    def test_create_user_chr(self):
+    def foo_test_create_user_chr(self):
         main_page = imdb_page.CreateUser(self.driver)
         main_page.click_sign_in()
         main_page.click_create_account()
