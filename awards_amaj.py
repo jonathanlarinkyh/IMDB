@@ -1,5 +1,6 @@
 from datetime import datetime
 import time
+
 import aa_page
 import unittest
 
@@ -109,7 +110,7 @@ class test_imdb_menu(unittest.TestCase):
         main_page.click_Emmys()
         self.assertEqual(self.driver.find_element_by_xpath("//h1[normalize-space()='EMMYS']").text,
                          "EMMYS", msg="Not Emmys")
-        self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/Emmys.png")
+        self.driver.save_screenshot("Screenshots/SC_Amaj/Emmys.png")
         time.sleep(5)
 
     def foo_test_005_menu_STARmeter_Awards(self):
@@ -119,7 +120,7 @@ class test_imdb_menu(unittest.TestCase):
         main_page.click_STARmeter_Awards()
         self.assertEqual(self.driver.find_element_by_xpath("//h1[normalize-space()='IMDb STARmeter AWARDS']").text,
                          "IMDb STARmeter AWARDS", msg="Wrong Page Not STARmeter Awards")
-        self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/Starmeter Award.png")
+        self.driver.save_screenshot("Screenshots/SC_Amaj/Starmeter Award.png")
         time.sleep(5)
 
     def foo_test_006_menu_SD_Comic_Con(self):
@@ -129,7 +130,7 @@ class test_imdb_menu(unittest.TestCase):
         main_page.click_SanDiego_Comic_Con()
         self.assertEqual(self.driver.find_element_by_xpath("//*[@id='widget-nav']/div[1]/div/a/h1").text,
                          "SAN DIEGO COMIC-CON", msg="Wrong Page Not SD COMIC CON")
-        self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/SD Comic Con.png")
+        self.driver.save_screenshot("Screenshots/SC_Amaj/SD Comic Con.png")
         time.sleep(5)
 
     def foo_test_007_menu_NY_Comic_Con(self):
@@ -139,7 +140,7 @@ class test_imdb_menu(unittest.TestCase):
         main_page.click_NY_Comic_Con()
         self.assertEqual(self.driver.find_element_by_xpath("//h1[normalize-space()='NEW YORK COMIC CON']").text,
                          "NEW YORK COMIC CON", msg="Wrong Page Not NY COMIC CON")
-        self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/NY Comic Con.png")
+        self.driver.save_screenshot("Screenshots/SC_Amaj/NY Comic Con.png")
         time.sleep(5)
 
     def foo_test_008_menu_Sundance_FF(self):
@@ -149,7 +150,7 @@ class test_imdb_menu(unittest.TestCase):
         main_page.click_Sundance_Film_Festival()
         self.assertEqual(self.driver.find_element_by_xpath("//h1[normalize-space()='SUNDANCE FILM FESTIVAL']").text,
                          "SUNDANCE FILM FESTIVAL", msg="Wrong Page Not SUNDANCE FILM FESTIVAL")
-        self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/Sundance FF.png")
+        self.driver.save_screenshot("Screenshots/SC_Amaj/Sundance FF.png")
         time.sleep(5)
 
     def foo_test_009_menu_Toronto_Intl_FF(self):
@@ -159,7 +160,7 @@ class test_imdb_menu(unittest.TestCase):
         main_page.click_Toronto_Intl_Film_Festival()
         self.assertEqual(self.driver.find_element_by_xpath("//h1[normalize-space()='TORONTO INTERNATIONAL FILM FESTIVAL']").text,
                          "TORONTO INTERNATIONAL FILM FESTIVAL", msg="Wrong Page Not TORONTO INTL FILM FESTIVAL")
-        self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/Toronto Intl FF.png")
+        self.driver.save_screenshot("Screenshots/SC_Amaj/Toronto Intl FF.png")
         time.sleep(5)
 
     def foo_test_009_menu_AWARD_CENTRAL(self):
@@ -192,7 +193,6 @@ class test_imdb_menu(unittest.TestCase):
         self.assertEqual(
             self.driver.find_element_by_xpath("//h1[normalize-space()='All Events']").text,
             "All Events", msg="Wrong Page Not All Events")
-        self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/All Events.png")
         time.sleep(5)
 
     def tearDown(self):
@@ -209,12 +209,10 @@ class test_Awards_and_Events_Oscars(unittest.TestCase):
         self.driver.get("https://www.imdb.com")
 
     def tearDown(self):
-#        for method, error in self.outcome.errors:
-#            if error:  # Screenshot will be taken if there's an error raised
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         name = 'reports/screenshot-%s.png' % now
         self.driver.get_screenshot_as_file(name)
-
+        print(name)
         self.driver.quit()
 
     def foo_test_elements_of_oscars(self):
@@ -232,9 +230,14 @@ class test_Awards_and_Events_Oscars(unittest.TestCase):
         main_page.click_oscars_menu()
         main_page.click_winners_in_oscar()
         main_page.click_year_in_winners()
-        self.assertTrue(False)
+        # self.assertTrue(False)
 
 
 if __name__ == '__main__':
+    test_suite = unittest.TestSuite()
+    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(IMDBTest))
+    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(test_IMBD_Nav))
+    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(test_imdb_menu))
+    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(test_Awards_and_Events_Oscars))
     unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_name="IMDB_Tests_Amaj",
-                                                           output='Reports/'))
+                                                           output='Reports/', template='html_Temp/Temp.html')).runTests(test_suite)

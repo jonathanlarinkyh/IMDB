@@ -58,9 +58,8 @@
                                 {%- if test_case.err %}<p style="color:maroon;">{{ test_case.err[0].__name__ }}: {{ test_case.err[1] }}</p>{% endif %}
                                 {%- if test_case.err %}<p style="color:maroon;">{{ test_case.test_exception_info }}</p>{% endif %}
                                 {%- if test_case.stdout %}<p>{{ test_case.stdout }}</p>{% endif %}
-                                {{ test_case.stdout }}
-                                <img src="file:IMDB/IMDB/Reports/%%.png" alt="screenshot" style="width:600px;height:228px;" onclick="window.open(this.src)"
-                                     align="right">
+
+                                <img src={{ test_case.stdout }}>
                             </td>
                         </tr>
                         {%- endif %}
