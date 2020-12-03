@@ -9,9 +9,6 @@ from selenium.webdriver.common.by import By
 
 
 class PageObject:
-    def back_page(self):
-        self.driver.find_element_by_tag_name("html").send_keys(Keys.BACK_SPACE)
-
     def page_down(self):
         self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_DOWN)
 
@@ -19,11 +16,11 @@ class PageObject:
         self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_UP)
 
     def page_whole_down(self):
-        for page in range(0, 10):
+        for page in range(0, 100):
             self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_DOWN)
 
     def page_whole_up(self):
-        for page in range(0, 10):
+        for page in range(0, 100):
             self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_UP)
 
     def find_element_click_element_by_xpath(self, selector, wait=0):
@@ -46,9 +43,6 @@ class IMDBMenuWatch(PageObject):
     def click_dd_menu(self):
         self.find_element_click_element_by_xpath("//label[@id='imdbHeader-navDrawerOpen--desktop']", wait=10).click()
 
-    def click_clear_history(self):
-        self.find_element_click_element_by_css_selector("#clear_rvi", wait=10).click()
-
     def click_dd_menu_whats_new(self):
         self.find_element_click_element_by_xpath("//a[contains(@href, '/what-to-watch/?ref_=nv_watch')]", wait=10).click()
 
@@ -62,7 +56,7 @@ class IMDBMenuWatch(PageObject):
         self.find_element_click_element_by_xpath("//a[contains(@href, '/imdbpicks/?ref_=nv_pi')]", wait=10).click()
 
     def click_dd_menu_podcasts(self):
-        self.find_element_click_element_by_xpath("//a[contains(@href, '/podcasts/?ref_=nv_pod')]", wait=20).click()
+        self.find_element_click_element_by_xpath("//a[contains(@href, '/podcasts/?ref_=nv_pod')]", wait=10).click()
 
 
 class IMDBWhatToWatch(PageObject):
@@ -75,6 +69,15 @@ class IMDBWhatToWatch(PageObject):
     def click_fan_favorites(self):
         self.find_element_click_element_by_css_selector(".ipc-tab:nth-child(2) > span", wait=10).click()
 
-    def click_10th_choice(self):
-        self.find_element_click_element_by_xpath("//div[10]/div[3]/button/div", wait=10).click()
+    def click_first_choice(self):
+        self.find_element_click_element_by_xpath("//a/div[2]", wait=10).click()
+
+    def pick_first_movie(self):
+        self.find_element_click_element_by_xpath("//h3/a", wait=10).click()
+
+    def check_history(self):
+        self.find_element_click_element_by_css_selector("recently-viewed > .header", wait=10)
+
+    def click_clear_history(self):
+        self.find_element_click_element_by_css_selector("#clear_rvi", wait=10).click()
 

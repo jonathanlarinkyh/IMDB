@@ -1,12 +1,13 @@
 import unittest
 from selenium import webdriver
 import time
+from datetime import datetime
 import page
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.support.ui import WebDriverWait
-# import HtmlTestRunner
+import HtmlTestRunner
 
 
 def web_settings():
@@ -17,7 +18,7 @@ def web_settings():
     return driver
 
 
-class foo_IMDBNavTestCase(unittest.TestCase):
+class IMDBNavTestCase(unittest.TestCase):
 
     def setUp(self):
         """ Startar testen från IMDB startsida. """
@@ -65,7 +66,10 @@ class foo_IMDBNavTestCase(unittest.TestCase):
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/podcasts/?ref_=nv_pod")
 
     def tearDown(self):
-        self.driver.close()
+        date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        file_name = 'reports/report_pic-%s.png' % date
+        self.driver.get_screenshot_as_file(file_name)
+        self.driver.quit()
 
 
 class IMDBWhatToWatchTestCase(unittest.TestCase):
@@ -90,9 +94,31 @@ class IMDBWhatToWatchTestCase(unittest.TestCase):
         second_page.click_most_popular()
         time.sleep(2)
 
+    def test_clear_history(self):
+        """ Testar att cleara historiken efter val av film """
+        main_page = page.IMDBMenuWatch(self.driver)
+        second_page = page.IMDBWhatToWatch(self.driver)
+
+        main_page.click_dd_menu()
+        main_page.click_dd_menu_whats_new()
+        second_page.click_first_choice()
+        second_page.pick_first_movie()
+        time.sleep(1)
+        self.driver.back()
+        main_page.page_whole_down()
+        time.sleep(2)
+        second_page.click_clear_history()
+        time.sleep(2)
+
     def tearDown(self):
-        self.driver.close()
+        date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        file_name = 'reports/report_pic-%s.png' % date
+        self.driver.get_screenshot_as_file(file_name)
+
+        self.driver.quit()
 
 
 if __name__ == '__main__':
-    unittest.main(verbosity=2)
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(combine_reports=True, report_name="FullReport",
+                                                           template="template_report/reports.html",
+                                                           add_timestamp=False), verbosity=2)
