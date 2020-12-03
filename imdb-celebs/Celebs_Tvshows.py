@@ -105,6 +105,7 @@ class IMDBCelebsTVShows(unittest.TestCase):
 
     targetURL6 = "https://www.imdb.com/search/title/?title_type=tv_series,tv_miniseries&genres=documentary&sort=runtime,asc&start=51&view=simple"
     targetURL7 = "https://www.imdb.com/news/top?ref_=nwc_sb_nwc_sm"
+
     def setUp(self):
         self.driver = webdriver_factory()
         print("4")
@@ -114,7 +115,6 @@ class IMDBCelebsTVShows(unittest.TestCase):
         print("6")
         self.driver.get("https://www.imdb.com/?ref_=nv_home")
         print("7")
-
 
     @print_name
     def test_celebs_born_today(self):
@@ -146,9 +146,6 @@ class IMDBCelebsTVShows(unittest.TestCase):
         menu.click_menu()
         main_page.click_most_popular()
         main_page.click_birth_date()
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.visibility_of_element_located((By.XPATH, "//div[2]/a[3]")))
-
         for i in range(15):
             main_page.click_page_down()
         self.assertEqual(self.driver.current_url, IMDBCelebsTVShows.targetURL3)
@@ -163,18 +160,13 @@ class IMDBCelebsTVShows(unittest.TestCase):
         main_page.click_death_date()
         assert self.driver.find_element_by_xpath("//a[contains(.,'Death Date')]").text == "Death Date"
 
-
     @print_name
     def test_celebs_celebrity_news(self):
         main_page = page.CelebsCelebrityNews(self.driver)
         menu = page.Menu(self.driver)
         self.listener.get_test_method_name("_celebs_celebrity_news", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
         menu.click_menu()
-        #wait = WebDriverWait(self.driver, 10)
-        #element = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Celebrity News")))
-        #element.click()
         main_page.click_celebrity_news()
-        #time.sleep(2)
         for i in range(15):
             main_page.click_page_down()
         main_page.click_load_more()
@@ -221,8 +213,9 @@ class IMDBCelebsTVShows(unittest.TestCase):
         self.listener.get_test_method_name("_tvshows_whats_on_tv", datetime.now().strftime(" %H.%M.%S, %m.%d.%Y"))
         menu.click_menu()
         main_page.click_whats_on_tv()
-        main_page.choose_twitter()
         main_page.click_page_down()
+        main_page.click_holiday()
+        self.assertTrue(self.driver.current_url, "https://www.imdb.com/whats-on-tv/holiday-tv-shows-movies/rg738826752/mediaviewer/rm3377125633/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=3c9deb43-b3f2-4d0c-8761-b0a25308fa9d&pf_rd_r=QDCMRQYV087S531F080X&pf_rd_s=center-1&pf_rd_t=60601&pf_rd_i=whats-on-tv")
 
 
     @print_name

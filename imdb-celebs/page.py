@@ -72,7 +72,7 @@ class CelebsMostPopular(PageObject):
         self.driver.find_element_by_link_text("Most Popular Celebs").click()
 
     def click_birth_date(self):
-        self.driver.find_element_by_xpath("//div[2]/a[3]").click()
+        self.find_element_click_element_by_xpath("//div[2]/a[3]", wait=5).click()
 
     def click_clear_history(self):
         self.driver.find_element_by_css_selector("#clear_rvi")
@@ -108,8 +108,13 @@ class TvshowsWhatsOnTV(PageObject):
     def click_grid(self):
         self.driver.find_element_by_css_selector(".ipc-icon--grid-view").click()
 
-    def choose_twitter(self):
-        self.driver.find_element_by_xpath("/html/body/div/div[2]/div[2]").send_keys(Keys.PAGE_DOWN)
+    def click_twitter(self):
+        self.driver.find_element_by_xpath("//a[contains(@href, 'https://support.twitter.com/articles/20175256')]").click()
+
+    def click_holiday(self):
+        self.driver.find_element_by_link_text("See the full gallery")
+
+
 
 
 class TvshowsTopRated(PageObject):
@@ -273,9 +278,3 @@ class CreateUser(PageObject):
         self.driver.find_element_by_xpath("//*[@id='cvf-page-content']/div/div")
 
 
-class Youtube(PageObject):
-    def __init__(self, driver: webdriver.Chrome):
-        self.driver = driver
-
-    def click_f4(self):
-        self.driver.find_element_by_tag_name("html").send_keys(Keys.F4)
