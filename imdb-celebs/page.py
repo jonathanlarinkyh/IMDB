@@ -108,13 +108,8 @@ class TvshowsWhatsOnTV(PageObject):
     def click_grid(self):
         self.driver.find_element_by_css_selector(".ipc-icon--grid-view").click()
 
-    def click_twitter(self):
-        self.driver.find_element_by_xpath("//a[contains(@href, 'https://support.twitter.com/articles/20175256')]").click()
-
     def click_holiday(self):
         self.driver.find_element_by_link_text("See the full gallery")
-
-
 
 
 class TvshowsTopRated(PageObject):
