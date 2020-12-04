@@ -9,7 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 
-## User Generator ###
+# User Generator
 letters = [random.choice(string.ascii_lowercase) for i in
            range(random.randint(5, 26))]
 password = [random.choice(string.ascii_lowercase) for l in
@@ -33,6 +33,14 @@ class PageObject:
 
     def click_backspace(self):
         self.driver.find_element_by_tag_name("html").send_keys(Keys.BACK_SPACE)
+
+    def page_whole_down(self):
+        for page in range(0, 8):
+            self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_DOWN)
+
+    def page_whole_up(self):
+        for page in range(0, 8):
+            self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_UP)
 
     # def accept_cookies(self):
     #     self.driver.find_element_by_id("cn-accept-cookie").click()
@@ -64,8 +72,84 @@ class Menu(PageObject):
         self.driver.save_screenshot("SC_Amaj/Menu/" + "Menu_SC " + time.asctime().replace(":", "") + ".png")
 
 
+class IMDBMenuMovies(PageObject):
+    def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
+        self.driver = driver
+
+    def click_home(self):
+        self.driver.find_element_by_xpath("(//a[contains(@href, '/?ref_=nv_home')])[2]").click()
+
+    def click_menu_dd(self):
+        self.find_element_clickable_element_by_xpath("//label[contains(.,'Menu')]", wait=10).click()
+
+    def click_menu_dd_release_calendar(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, 'https://www.imdb.com/calendar/?ref_=nv_mv_cal')]", wait=10).click()
+
+    def click_menu_dd_dvd_blue_releases(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, 'https://www.imdb.com/list/ls016522954/?ref_=nv_tvv_dvd')]", wait=10).click()
+
+    def click_menu_dd_top_rated_movies(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, '/chart/top/?ref_=nv_mv_250')]", wait=10).click()
+
+    def click_menu_dd_most_popular_movies(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, '/chart/moviemeter/?ref_=nv_mv_mpm')]", wait=10).click()
+
+    def click_menu_dd_browse_movies_by_genre(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, 'https://www.imdb.com/feature/genre/?ref_=nv_ch_gr')]", wait=10).click()
+
+    def click_menu_dd_top_box_office(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, '/chart/boxoffice/?ref_=nv_ch_cht')]", wait=10).click()
+
+    def click_menu_dd_showtime_tickets(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, 'https://www.imdb.com/showtimes/?ref_=nv_mv_sh')]", wait=10).click()
+
+    def click_menu_dd_in_theater(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, 'https://www.imdb.com/movies-in-theaters/?ref_=nv_mv_inth')]", wait=10).click()
+
+    def click_menu_dd_coming_soon(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, 'https://www.imdb.com/coming-soon/?ref_=nv_mv_cs')]", wait=10).click()
+
+    def click_menu_dd_movie_news(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(.,'Movie News')]", wait=10).click()
+
+    def click_menu_dd_india_movie_spotlight(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(.,'India Movie Spotlight')]", wait=10).click()
+
+
+class ReleaseCalendar(PageObject):
+    def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
+        self.driver = driver
+
+    def click_clear_history(self):
+        self.find_element_clickable_element_by_css_selector("#clear_rvi", wait=10).click()
+
+    def click_first_choice(self):
+        self.find_element_clickable_element_by_css_selector("#main > ul:nth-child(2) a", wait=10).click()
+
+    def click_second_choice(self):
+        self.find_element_clickable_element_by_css_selector("ul:nth-child(4) > li:nth-child(1) > a", wait=10).click()
+
+    def click_director(self):
+        self.find_element_clickable_element_by_css_selector(".credit_summary_item:nth-child(2) > a", wait=10).click()
+
+    def history_clickable_first_image(self):
+        self.find_element_clickable_element_by_xpath("//div[3]/div/div[2]/div/a/img", wait=10).click()
+
+
+class DVDnBlue(PageObject):
+    def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
+        self.driver = driver
+
+    def click_first_choice(self):
+        self.find_element_clickable_element_by_css_selector(".lister-item:nth-child(1) .loadlate", wait=10).click()
+
+
 class CelebsBornToday(PageObject):
     def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
         self.driver = driver
 
     def click_born_today(self):
@@ -77,13 +161,14 @@ class CelebsBornToday(PageObject):
 
 class CelebsMostPopular(PageObject):
     def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
         self.driver = driver
 
     def click_most_popular(self):
         self.driver.find_element_by_link_text("Most Popular Celebs").click()
 
     def click_birth_date(self):
-        self.find_element_click_element_by_xpath("//div[2]/a[3]", wait=5).click()
+        self.find_element_clickable_element_by_xpath("//div[2]/a[3]", wait=5).click()
 
     def click_clear_history(self):
         self.driver.find_element_by_css_selector("#clear_rvi")
@@ -109,6 +194,7 @@ class CelebsCelebrityNews(PageObject):
 
 class TvshowsWhatsOnTV(PageObject):
     def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
         self.driver = driver
 
     def click_whats_on_tv(self):
@@ -126,6 +212,7 @@ class TvshowsWhatsOnTV(PageObject):
 
 class TvshowsTopRated(PageObject):
     def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
         self.driver = driver
 
     def click_top_rated(self):
@@ -146,6 +233,7 @@ class TvshowsTopRated(PageObject):
 
 class TvshowsMostPopular(PageObject):
     def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
         self.driver = driver
 
     def click_most_popular(self):
@@ -181,6 +269,7 @@ class TvshowsMostPopular(PageObject):
 
 class TvshowsBrowseTvshows(PageObject):
     def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
         self.driver = driver
 
     def click_browse(self):
@@ -207,6 +296,7 @@ class TvshowsBrowseTvshows(PageObject):
 
 class TvshowsTvnews(PageObject):
     def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
         self.driver = driver
 
     def click_tvnews(self):
@@ -221,6 +311,7 @@ class TvshowsTvnews(PageObject):
 
 class TvshowsIndian(PageObject):
     def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
         self.driver = driver
 
     def click_indian_tv(self):
@@ -248,6 +339,7 @@ class TvshowsIndian(PageObject):
 class CreateUser(PageObject):
 
     def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
         self.driver = driver
 
     def click_sign_in(self):
@@ -284,6 +376,57 @@ class CreateUser(PageObject):
 
     def find_signin(self):
         self.driver.find_element_by_xpath("//*[@id='cvf-page-content']/div/div")
+
+
+class IMDBMenuWatch(PageObject):
+    def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
+        self.driver = driver
+
+    def click_home(self):
+        self.driver.find_element_by_xpath("(//a[contains(@href, '/?ref_=nv_home')])[2]").click()
+
+    def click_dd_menu(self):
+        self.find_element_clickable_element_by_xpath("//label[@id='imdbHeader-navDrawerOpen--desktop']", wait=10).click()
+
+    def click_dd_menu_whats_new(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, '/what-to-watch/?ref_=nv_watch')]", wait=10).click()
+
+    def click_dd_menu_latest_trailers(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, '/trailers/?ref_=nv_mv_tr')]", wait=10).click()
+
+    def click_dd_menu_originals(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, '/originals/?ref_=nv_sf_ori')]", wait=10).click()
+
+    def click_dd_menu_picks(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, '/imdbpicks/?ref_=nv_pi')]", wait=10).click()
+
+    def click_dd_menu_podcasts(self):
+        self.find_element_clickable_element_by_xpath("//a[contains(@href, '/podcasts/?ref_=nv_pod')]", wait=10).click()
+
+
+class IMDBWhatToWatch(PageObject):
+    def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
+        self.driver = driver
+
+    def click_most_popular(self):
+        self.find_element_clickable_element_by_xpath("//li[5]/span", wait=10).click()
+
+    def click_fan_favorites(self):
+        self.find_element_clickable_element_by_css_selector(".ipc-tab:nth-child(2) > span", wait=10).click()
+
+    def click_first_choice(self):
+        self.find_element_clickable_element_by_xpath("//a/div[2]", wait=10).click()
+
+    def pick_first_movie(self):
+        self.find_element_clickable_element_by_xpath("//h3/a", wait=10).click()
+
+    def check_history(self):
+        self.find_element_clickable_element_by_css_selector("recently-viewed > .header", wait=10)
+
+    def click_clear_history(self):
+        self.find_element_clickable_element_by_css_selector("#clear_rvi", wait=10).click()
 
 
 class IMDB_menu_awards_and_events(PageObject):
