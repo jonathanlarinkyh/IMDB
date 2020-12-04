@@ -47,7 +47,11 @@ class IMDBTest(unittest.TestCase):
         time.sleep(5)
 
     def tearDown(self):
-        self.driver.close()
+        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        name = 'screenshot-%s.png' % now
+        self.driver.get_screenshot_as_file("reports/" + name)
+        print(name)
+        self.driver.quit()
 
 
 class test_IMBD_Nav(unittest.TestCase):
@@ -65,7 +69,11 @@ class test_IMBD_Nav(unittest.TestCase):
         main_page = self.driver.get("https://imdb.com")
 
     def tearDown(self):
-        self.driver.close()
+        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        name = 'screenshot-%s.png' % now
+        self.driver.get_screenshot_as_file("reports/" + name)
+        print(name)
+        self.driver.quit()
 
 
 class test_imdb_menu(unittest.TestCase):
@@ -110,7 +118,6 @@ class test_imdb_menu(unittest.TestCase):
         main_page.click_Emmys()
         self.assertEqual(self.driver.find_element_by_xpath("//h1[normalize-space()='EMMYS']").text,
                          "EMMYS", msg="Not Emmys")
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Emmys.png")
         time.sleep(5)
 
     def foo_test_005_menu_STARmeter_Awards(self):
@@ -120,7 +127,6 @@ class test_imdb_menu(unittest.TestCase):
         main_page.click_STARmeter_Awards()
         self.assertEqual(self.driver.find_element_by_xpath("//h1[normalize-space()='IMDb STARmeter AWARDS']").text,
                          "IMDb STARmeter AWARDS", msg="Wrong Page Not STARmeter Awards")
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Starmeter Award.png")
         time.sleep(5)
 
     def foo_test_006_menu_SD_Comic_Con(self):
@@ -130,7 +136,6 @@ class test_imdb_menu(unittest.TestCase):
         main_page.click_SanDiego_Comic_Con()
         self.assertEqual(self.driver.find_element_by_xpath("//*[@id='widget-nav']/div[1]/div/a/h1").text,
                          "SAN DIEGO COMIC-CON", msg="Wrong Page Not SD COMIC CON")
-        self.driver.save_screenshot("Screenshots/SC_Amaj/SD Comic Con.png")
         time.sleep(5)
 
     def foo_test_007_menu_NY_Comic_Con(self):
@@ -140,7 +145,6 @@ class test_imdb_menu(unittest.TestCase):
         main_page.click_NY_Comic_Con()
         self.assertEqual(self.driver.find_element_by_xpath("//h1[normalize-space()='NEW YORK COMIC CON']").text,
                          "NEW YORK COMIC CON", msg="Wrong Page Not NY COMIC CON")
-        self.driver.save_screenshot("Screenshots/SC_Amaj/NY Comic Con.png")
         time.sleep(5)
 
     def foo_test_008_menu_Sundance_FF(self):
@@ -150,7 +154,6 @@ class test_imdb_menu(unittest.TestCase):
         main_page.click_Sundance_Film_Festival()
         self.assertEqual(self.driver.find_element_by_xpath("//h1[normalize-space()='SUNDANCE FILM FESTIVAL']").text,
                          "SUNDANCE FILM FESTIVAL", msg="Wrong Page Not SUNDANCE FILM FESTIVAL")
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Sundance FF.png")
         time.sleep(5)
 
     def foo_test_009_menu_Toronto_Intl_FF(self):
@@ -160,7 +163,6 @@ class test_imdb_menu(unittest.TestCase):
         main_page.click_Toronto_Intl_Film_Festival()
         self.assertEqual(self.driver.find_element_by_xpath("//h1[normalize-space()='TORONTO INTERNATIONAL FILM FESTIVAL']").text,
                          "TORONTO INTERNATIONAL FILM FESTIVAL", msg="Wrong Page Not TORONTO INTL FILM FESTIVAL")
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Toronto Intl FF.png")
         time.sleep(5)
 
     def foo_test_009_menu_AWARD_CENTRAL(self):
@@ -171,7 +173,6 @@ class test_imdb_menu(unittest.TestCase):
         self.assertEqual(
             self.driver.find_element_by_xpath("//h1[normalize-space()='AWARDS CENTRAL']").text,
             "AWARDS CENTRAL", msg="Wrong Page Not AWARD CENTRAL")
-        self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/Award Central.png")
         time.sleep(5)
 
     def foo_test_010_menu_Festival_Central(self):
@@ -182,7 +183,7 @@ class test_imdb_menu(unittest.TestCase):
         self.assertEqual(
             self.driver.find_element_by_xpath("//h1[normalize-space()='FESTIVAL CENTRAL']").text,
             "FESTIVAL CENTRAL", msg="Wrong Page Not FESTIVAL CENTRAL")
-        self.driver.save_screenshot("C:/Users/AmAj/Desktop/Python Projects/IMDB/Jonathan/SC_Amaj/Festival Central.png")
+
         time.sleep(5)
 
     def foo_test_011_menu_All_Events(self):
@@ -196,7 +197,11 @@ class test_imdb_menu(unittest.TestCase):
         time.sleep(5)
 
     def tearDown(self):
-        self.driver.close()
+        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        name = 'screenshot-%s.png' % now
+        self.driver.get_screenshot_as_file("reports/" + name)
+        print(name)
+        self.driver.quit()
 
 
 class test_Awards_and_Events_Oscars(unittest.TestCase):
@@ -210,8 +215,8 @@ class test_Awards_and_Events_Oscars(unittest.TestCase):
 
     def tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        name = 'reports/screenshot-%s.png' % now
-        self.driver.get_screenshot_as_file(name)
+        name = 'screenshot-%s.png' % now
+        self.driver.get_screenshot_as_file("reports/" + name)
         print(name)
         self.driver.quit()
 

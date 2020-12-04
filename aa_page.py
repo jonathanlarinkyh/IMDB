@@ -139,7 +139,7 @@ class IMDB_Menu_Oscars(PageObject):
     def click_winners_in_oscar(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/oscars/?ref_=nv_ev_acd']", wait=15).click()
         self.find_element_clickable_element_by_xpath("//span[normalize-space()='WINNERS']", wait=5).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Oscars/" + "Winners_SC " + time.asctime().replace(":", "") + ".png")
+        # self.driver.save_screenshot("Screenshots/SC_Amaj/Oscars/" + "Winners_SC " + time.asctime().replace(":", "") + ".png")
         time.sleep(5)
 
     def click_year_in_winners(self):

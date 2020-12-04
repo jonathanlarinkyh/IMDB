@@ -59,7 +59,7 @@
                                 {%- if test_case.err %}<p style="color:maroon;">{{ test_case.test_exception_info }}</p>{% endif %}
                                 {%- if test_case.stdout %}<p>{{ test_case.stdout }}</p>{% endif %}
 
-                                <img src={{ test_case.stdout }}>
+                                <img src={{ test_case.stdout }} >
                             </td>
                         </tr>
                         {%- endif %}
