@@ -1,3 +1,4 @@
+from datetime import datetime
 import unittest
 import HtmlTestRunner
 from selenium import webdriver
@@ -6,7 +7,7 @@ from IMDB.src import page
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import WebDriverException, NoSuchElementException
 
 
 # Sweet
@@ -99,7 +100,11 @@ class IMDBPageMenu(unittest.TestCase):
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/india/toprated/?ref_=nv_mv_in")
 
     def tearDown(self):
-        self.driver.close()
+        date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        file_name = 'reports/screenshot-%s.png' % date
+        self.driver.get_screenshot_as_file(file_name)
+
+        self.driver.quit()
 
 
 class IMDBReleaseCalendar(unittest.TestCase):
@@ -149,7 +154,9 @@ class IMDBReleaseCalendar(unittest.TestCase):
         second_page.click_director()
         time.sleep(1)
         main_page.page_whole_down()
-        second_page.click_clear_history()
+        self.assertEqual(self.driver.current_url, "https://www.imdb.com/name/nm2662500/?ref_=tt_ov_dr")
+
+
 
     def test_release_calendar_movie_history_clickable(self):
         main_page = page.IMDBMenuMovies(self.driver)
@@ -161,9 +168,14 @@ class IMDBReleaseCalendar(unittest.TestCase):
         main_page.page_whole_down()
         time.sleep(1)
         second_page.history_clickable_first_image()
+        self.assertEqual(self.driver.current_url, "https://www.imdb.com/title/tt7620598/?ref_=rlm")
 
     def tearDown(self):
-        self.driver.close()
+        date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        file_name = 'reports/screenshot-%s.png' % date
+        self.driver.get_screenshot_as_file(file_name)
+
+        self.driver.quit()
 
 
 class IMDBDVDnBlueRayReleases(unittest.TestCase):
@@ -216,7 +228,11 @@ class IMDBDVDnBlueRayReleases(unittest.TestCase):
         second_page.history_clickable_first_image()
 
     def tearDown(self):
-        self.driver.close()
+        date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        file_name = 'reports/screenshot-%s.png' % date
+        self.driver.get_screenshot_as_file(file_name)
+
+        self.driver.quit()
 
 
 if __name__ == '__main__':

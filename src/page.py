@@ -6,8 +6,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-#s2323jkjk
-
+from selenium.webdriver.support.events import EventFiringWebDriver
+from selenium.webdriver.support.events import AbstractEventListener
 
 class PageObject:
 
@@ -100,6 +100,9 @@ class ReleaseCalendar(PageObject):
 
     def history_clickable_first_image(self):
         self.find_element_click_element_by_xpath("//div[3]/div/div[2]/div/a/img", wait=10).click()
+
+    def history_clickable_first_image_visible(self):
+        self.find_element_click_element_by_xpath("//div[3]/div/div[2]/div/a/img", wait=10)
 
 
 class DVDnBlue(PageObject):
