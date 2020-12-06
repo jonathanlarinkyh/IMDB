@@ -6,6 +6,18 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import random, string
+
+# User Generator
+letters = [random.choice(string.ascii_lowercase) for l in
+           range(random.randint(5, 26))]
+password = [random.choice(string.ascii_lowercase) for p in
+            range(random.randint(5, 26))]
+letters2 = [random.choice(chr(random.randint(0, 65000))) for l2 in
+            range(random.randint(5, 26))]
+# Email service
+emaillist = ["@hotmail.com", "@gmail.com", "@yahoo.com", "@mail.com"]
+email = [random.choice(emaillist)]
 
 
 class PageObject:
@@ -17,6 +29,20 @@ class PageObject:
 
     def page_up(self):
         self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_UP)
+
+    def click_enter(self):
+        self.driver.find_element_by_tag_name("html").send_keys(Keys.ENTER)
+
+    def click_backspace(self):
+        self.driver.find_element_by_tag_name("html").send_keys(Keys.BACK_SPACE)
+
+    def page_whole_down(self):
+        for page in range(0, 8):
+            self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_DOWN)
+
+    def page_whole_up(self):
+        for page in range(0, 8):
+            self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_UP)
 
     # def accept_cookies(self):
     #     self.driver.find_element_by_id("cn-accept-cookie").click()
@@ -30,6 +56,9 @@ class PageObject:
     def find_visible_element_by_xpath(self, selector, wait=10):
         return WebDriverWait(self.driver, wait).until(EC.visibility_of_element_located((By.XPATH, selector)))
 
+    def find_element_visible_element_by_link_text(self, selector, wait=0):
+        return WebDriverWait(self.driver, wait).until(EC.visibility_of_element_located((By.LINK_TEXT, selector)))
+
 
 class IMDBMainPage(PageObject):
     def __init__(self, driver: webdriver.Chrome):
@@ -38,7 +67,47 @@ class IMDBMainPage(PageObject):
 
     def click_menu_dd(self):
         self.find_element_clickable_element_by_xpath("//label[contains(.,'Menu')]", wait=10).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Menu/" + "Menu_SC " + time.asctime().replace(":", "") + ".png")
+
+
+class CreateUser(PageObject):
+
+    def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
+        self.driver = driver
+
+    def click_sign_in(self):
+        self.driver.find_element_by_xpath("//nav[@id='imdbHeader']/div[2]/div[5]/a/div").click()
+
+    def click_create_account(self):
+        self.driver.find_element_by_link_text("Create a New Account").click()
+
+    def generate_name_email_ascii(self):
+        self.driver.find_element_by_xpath("//input[@id='ap_customer_name']").send_keys(letters)
+        self.driver.find_element_by_xpath("//input[@id='ap_email']").send_keys(letters + email)
+
+    def generate_name_email(self):
+        self.driver.find_element_by_xpath("//input[@id='ap_customer_name']").send_keys(letters2)
+        self.driver.find_element_by_xpath("//input[@id='ap_email']").send_keys(letters2 + email)
+
+    def generate_password(self):
+        self.driver.find_element_by_css_selector("#ap_password").send_keys(password)
+        self.driver.find_element_by_css_selector("#ap_password_check").send_keys(password)
+        print("".join(password))
+
+    def create(self):
+        self.driver.find_element_by_xpath("//input[@id='continue']").click()
+
+    def change_otp_method(self):
+        self.find_element_clickable_element_by_xpath("//a[normalize-space()='(Change)']", wait=10).click()
+
+    def click_hear_letters(self):
+        self.driver.find_element_by_xpath("//a[contains(text(),'Hear the characters')]").click()
+
+    def click_play(self):
+        self.driver.find_element_by_xpath("//*[@id='cvf-page-content']/div/div/div/div[2]/div/audio").send_keys(Keys.ENTER)
+
+    def find_signin(self):
+        self.driver.find_element_by_xpath("//*[@id='cvf-page-content']/div/div")
 
 
 class IMDB_menu_awards(PageObject):
@@ -52,75 +121,62 @@ class IMDB_menu_awards(PageObject):
 
     def click_oscars(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/oscars/?ref_=nv_ev_acd']", wait=15).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Oscars/" + "OSCAR_SC " + time.asctime().replace(":", "") + ".png")
         time.sleep(5)
 
         self.find_element_clickable_element_by_css_selector(" a[title='Winners'] span:nth-child(1)").click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Oscars/" + "Winners_SC " + time.asctime().replace(":", "") + ".png")
         time.sleep(5)
 
     def click_best_picture_Winner(self):
         self.find_element_clickable_element_by_xpath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[3]/span/div/div/ul/a[3]", wait=15).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/BPW/" + "BPW_SC" + time.asctime().replace(":", "") + ".png")
 
     def click_Golden_Globes(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/golden-globes/?ref_=nv_ev_gg']", wait=15).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/G-Globes/" + "Golden Globe " + time.asctime().replace(":", "") + ".png")
 
     #
 
     def click_Emmys(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/emmys/?ref_=nv_ev_rte']", wait=15).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Emmys/" + "Emmys_SC" + time.asctime().replace(":", "") + ".png")
 
     #
 
     def click_STARmeter_Awards(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/starmeterawards/?ref_=nv_ev_sma']", wait=15).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Star Meter Awards/" + "StarMeter Awards " + time.asctime().replace(":", "") + ".png")
 
     #
 
     def click_SanDiego_Comic_Con(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/comic-con/?ref_=nv_ev_comic']", wait=15).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/SD Comic-Con/" + "SD_Comic_Con " + time.asctime().replace(":", "") + ".png")
 
     #
 
     def click_NY_Comic_Con(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/nycc/?ref_=nv_ev_nycc']", wait=15).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/NY Comic-Con/" + "NY Comic_Con " + time.asctime().replace(":", "") + ".png")
 
     #
 
     def click_Sundance_Film_Festival(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/sundance/?ref_=nv_ev_sun']", wait=15).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Sundance Film F/" + "Sundance Film Fes " + time.asctime().replace(":", "") + ".png")
 
     #
 
     def click_Toronto_Intl_Film_Festival(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/toronto/?ref_=nv_ev_tor']", wait=15).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Toronto Intl Film F/" + "Toronto Intl FF " + time.asctime().replace(":", "") + ".png")
         time.sleep(5)
 
     #
 
     def click_Awards_central(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/awards-central/?ref_=nv_ev_awrd']", wait=15).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Awards Central/" + "Awards Central " + time.asctime().replace(":", "") + ".png")
 
     #
 
     def click_Festival_Central(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/festival-central/?ref_=nv_ev_fc']", wait=15).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/Festival Central/" + "Festival Central " + time.asctime().replace(":", "") + ".png")
 
     #
 
     def click_All_Events(self):
         self.find_element_clickable_element_by_xpath("//a[@href='https://www.imdb.com/event/all/?ref_=nv_ev_all']", wait=15).click()
-        self.driver.save_screenshot("Screenshots/SC_Amaj/All Events/" + "All Events " + time.asctime().replace(":", "") + ".png")
 
 
 class IMDB_Menu_Oscars(PageObject):
@@ -139,7 +195,6 @@ class IMDB_Menu_Oscars(PageObject):
     def click_winners_in_oscar(self):
         self.find_element_clickable_element_by_xpath("//a[@href='/oscars/?ref_=nv_ev_acd']", wait=15).click()
         self.find_element_clickable_element_by_xpath("//span[normalize-space()='WINNERS']", wait=5).click()
-        # self.driver.save_screenshot("Screenshots/SC_Amaj/Oscars/" + "Winners_SC " + time.asctime().replace(":", "") + ".png")
         time.sleep(5)
 
     def click_year_in_winners(self):

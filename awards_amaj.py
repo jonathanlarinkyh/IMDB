@@ -85,7 +85,7 @@ class test_imdb_menu(unittest.TestCase):
         self.driver = webdriver_chrome()
         self.driver.get("https://www.imdb.com")
 
-    def est_click_menu(self):
+    def foo_test_click_menu(self):
         main_page = aa_page.IMDBMainPage(self.driver)
         main_page.click_menu_dd()
 
@@ -230,12 +230,48 @@ class test_Awards_and_Events_Oscars(unittest.TestCase):
         main_page.click_oscars_menu()
         main_page.click_winners_in_oscar()
 
-    def test_year_in_winners(self):
+    def foo_test_year_in_winners(self):
         main_page = aa_page.IMDB_Menu_Oscars(self.driver)
         main_page.click_oscars_menu()
         main_page.click_winners_in_oscar()
         main_page.click_year_in_winners()
         # self.assertTrue(False)
+
+
+class IMDB_User_login(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver_chrome()
+        self.driver.get("https://www.imdb.com/?ref_=nv_home")
+
+    def tearDown(self):
+        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        name = 'screenshot-%s.png' % now
+        self.driver.get_screenshot_as_file("reports/" + name)
+        print(name)
+        self.driver.quit()
+
+    def test_create_user_ascii(self):
+        main_page = aa_page.CreateUser(self.driver)
+        main_page.click_sign_in()
+        main_page.click_create_account()
+        main_page.generate_name_email_ascii()
+        main_page.generate_password()
+        main_page.create()
+        main_page.click_hear_letters()
+        main_page.click_play()
+        time.sleep(20)
+        self.assertEqual(self.driver.current_url, "https://www.imdb.com/ap/cvf/verify")
+
+    def test_create_user_chr(self):
+        main_page = aa_page.CreateUser(self.driver)
+        main_page.click_sign_in()
+        main_page.click_create_account()
+        main_page.generate_name_email()
+        main_page.generate_password()
+        main_page.create()
+        assert self.driver.find_element_by_xpath("//a[contains(text(),'Sign-In')]")
+        main_page.change_otp_method()
 
 
 if __name__ == '__main__':
