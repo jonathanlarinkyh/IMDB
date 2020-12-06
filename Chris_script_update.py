@@ -65,7 +65,6 @@ class IMDBCelebs(unittest.TestCase):
                      "&sort=death_date,asc&ref_=rlm"
     targetURL3 = "https://www.imdb.com/search/name/?gender=male,female&sort=birth_date,asc&ref_=rlm"
 
-
     def setUp(self):
         self.driver = webdriver_factory()
         self.driver.get("https://www.imdb.com/?ref_=nv_home")
