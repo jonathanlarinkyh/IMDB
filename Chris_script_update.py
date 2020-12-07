@@ -1,21 +1,15 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-import unittest
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.events import EventFiringWebDriver
-from selenium.webdriver.support.events import AbstractEventListener
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.firefox.options import Options
 import time
+import unittest
 from datetime import datetime
-import imdb_page
-import HtmlTestRunner
-from selenium.webdriver.support.ui import Select
-import getpass
-from selenium.webdriver.common.action_chains import ActionChains
 
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+import imdb_page
 
 WEBDRIVER = "CHROME"
 
@@ -57,12 +51,11 @@ def webdriver_factory():
 
 
 class IMDBCelebs(unittest.TestCase):
-
     targetURL0 = "https://www.imdb.com/?ref_=nv_home"
     targetURL1 = "https://www.imdb.com/search/name/?birth_monthday=" + datetime.now().strftime("%m-%d") \
                  + "&ref_=nv_cel_brn"
     targetURL2 = "https://www.imdb.com/search/name/?birth_monthday=" + datetime.now().strftime("%m-%d") + \
-                     "&sort=death_date,asc&ref_=rlm"
+                 "&sort=death_date,asc&ref_=rlm"
     targetURL3 = "https://www.imdb.com/search/name/?gender=male,female&sort=birth_date,asc&ref_=rlm"
 
     def setUp(self):
@@ -73,9 +66,9 @@ class IMDBCelebs(unittest.TestCase):
         main_page = imdb_page.CelebsBornToday(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
-        #wait = WebDriverWait(self.driver, 10)
-        #element = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Born Today")))
-        #element.click()
+        # wait = WebDriverWait(self.driver, 10)
+        # element = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Born Today")))
+        # element.click()
         main_page.click_born_today()
         self.assertEqual(self.driver.current_url, IMDBCelebs.targetURL1)
 
@@ -137,7 +130,7 @@ class IMDBCelebs(unittest.TestCase):
 
 
 class IMDBTVshows(unittest.TestCase):
-
+    targetURL0 = "https://www.imdb.com/?ref_=nv_home"
     targetURL4 = "https://www.imdb.com/imdbpicks/prime-video-originals/ls094369917/mediaviewer/rm1272830721/undefined?ref_=ls_mv_sm"
     targetURL5 = "https://help.imdb.com/article/imdb/track-movies-tv/ratings-faq/G67Y87TFYYP6TWAV#"
     targetURL6 = "https://www.imdb.com/search/title/?title_type=tv_series,tv_miniseries&genres=documentary&sort=runtime,asc&start=51&view=simple"
@@ -165,7 +158,9 @@ class IMDBTVshows(unittest.TestCase):
         main_page.click_whats_on_tv()
         main_page.page_down()
         main_page.click_holiday()
-        self.assertTrue(self.driver.current_url, "https://www.imdb.com/whats-on-tv/holiday-tv-shows-movies/rg738826752/mediaviewer/rm3377125633/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p=3c9deb43-b3f2-4d0c-8761-b0a25308fa9d&pf_rd_r=QDCMRQYV087S531F080X&pf_rd_s=center-1&pf_rd_t=60601&pf_rd_i=whats-on-tv")
+        self.assertTrue(self.driver.current_url,
+                        "https://www.imdb.com/whats-on-tv/holiday-tv-shows-movies/rg738826752/mediaviewer/rm3377125633/?pf_rd_m=A2FGELUUNOQJNL&pf_rd_p"
+                        "=3c9deb43-b3f2-4d0c-8761-b0a25308fa9d&pf_rd_r=QDCMRQYV087S531F080X&pf_rd_s=center-1&pf_rd_t=60601&pf_rd_i=whats-on-tv")
 
     def test_tvshows_top_rated(self):
         main_page = imdb_page.TvshowsTopRated(self.driver)
@@ -280,7 +275,6 @@ class IMDBTVshows(unittest.TestCase):
 
 
 class IMDBCreate(unittest.TestCase):
-
     targetURL8 = "https://www.imdb.com/ap/cvf/verify"
 
     def setUp(self):

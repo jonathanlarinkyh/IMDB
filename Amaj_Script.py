@@ -51,7 +51,7 @@ class IMDB_Home_Page_test(unittest.TestCase):
         self.driver.get("https://www.imdb.com/?ref_=nv_home")
 
     def foo_test_home_page(self):
-        main_page = aa_page.IMDBMainPage(self.driver)
+        main_page = imdb_page.IMDBMainPage(self.driver)
         main_page.page_down()
         main_page.page_whole_down()
         main_page.page_whole_up()
@@ -61,7 +61,7 @@ class IMDB_Home_Page_test(unittest.TestCase):
         main_page.click_back_page()
 
     def test_home_top_picks(self):
-        main_page = aa_page.IMDBMainPage(self.driver)
+        main_page = imdb_page.IMDBMainPage(self.driver)
         main_page.page_down()
         main_page.click_fan_favorite()
         main_page.page_whole_down()

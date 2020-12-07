@@ -38,6 +38,12 @@ class PageObject:
         for page in range(0, 8):
             self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_DOWN)
 
+    def click_back_page(self):
+        self.driver.back()
+
+    def click_forward_page(self):
+        self.driver.forward()
+
     def page_whole_up(self):
         for page in range(0, 8):
             self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_UP)
