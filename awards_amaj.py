@@ -17,6 +17,8 @@ def webdriver_chrome():
     driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(10)
     driver.maximize_window()
+    driver.back()
+    driver.forward()
     return driver
 
 
@@ -25,6 +27,8 @@ def webdriver_chrome_headless():
     driver = webdriver.Chrome(options=options)
     driver.set_window_size(1920, 1080)
     driver.implicitly_wait(10)
+    driver.back()
+    driver.forward()
     return driver
 
 
@@ -32,26 +36,36 @@ def webdriver_factory():
     return webdriver_chrome_headless()
 
 
-class IMDBTest(unittest.TestCase):
-    # declare variable to store the URL to be visited
-    base_url = "https://www.imdb.com"
-    time.sleep(2)
+class IMDB_Home_Page_test(unittest.TestCase):
 
-    # --- Pre - Condition ---
+    def __init__(self, methodName: str = ...):
+        super().__init__(methodName)
 
     def setUp(self):
-        # declare and initialize driver variable
-        self.driver = webdriver.Chrome()
-        # close the app dialogue page
-        self.driver.get("https://imdb.com")
-        time.sleep(5)
+        self.driver = webdriver_chrome()
+        self.driver.get("https://www.imdb.com/?ref_=nv_home")
 
-    def tearDown(self):
-        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        name = 'screenshot-%s.png' % now
-        self.driver.get_screenshot_as_file("reports/" + name)
-        print(name)
-        self.driver.quit()
+    def foo_test_home_page(self):
+        main_page = aa_page.IMDBMainPage(self.driver)
+        main_page.page_down()
+        main_page.page_whole_down()
+        main_page.page_whole_up()
+        main_page.click_browse_trailers()
+        main_page.page_whole_down()
+        main_page.page_whole_up()
+        main_page.click_back_page()
+
+    def test_home_top_picks(self):
+        main_page = aa_page.IMDBMainPage(self.driver)
+        main_page.page_down()
+        main_page.click_fan_favorite()
+        main_page.page_whole_down()
+        main_page.page_whole_up()
+        main_page.click_top_picks()
+        main_page.page_down()
+        main_page.page_down()
+        main_page.click_back_page()
+        main_page.click_back_page()
 
 
 class test_IMBD_Nav(unittest.TestCase):
@@ -84,6 +98,13 @@ class test_imdb_menu(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver_chrome()
         self.driver.get("https://www.imdb.com")
+
+    def foo_tearDown(self):
+        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        name = 'screenshot-%s.png' % now
+        self.driver.get_screenshot_as_file("reports/" + name)
+        print(name)
+        self.driver.quit()
 
     def foo_test_click_menu(self):
         main_page = aa_page.IMDBMainPage(self.driver)
@@ -196,7 +217,7 @@ class test_imdb_menu(unittest.TestCase):
             "All Events", msg="Wrong Page Not All Events")
         time.sleep(5)
 
-    def tearDown(self):
+    def foo_tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         name = 'screenshot-%s.png' % now
         self.driver.get_screenshot_as_file("reports/" + name)
@@ -213,7 +234,7 @@ class test_Awards_and_Events_Oscars(unittest.TestCase):
         self.driver = webdriver_chrome()
         self.driver.get("https://www.imdb.com")
 
-    def tearDown(self):
+    def foo_tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         name = 'screenshot-%s.png' % now
         self.driver.get_screenshot_as_file("reports/" + name)
@@ -244,14 +265,14 @@ class IMDB_User_login(unittest.TestCase):
         self.driver = webdriver_chrome()
         self.driver.get("https://www.imdb.com/?ref_=nv_home")
 
-    def tearDown(self):
+    def foo_tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         name = 'screenshot-%s.png' % now
         self.driver.get_screenshot_as_file("reports/" + name)
         print(name)
         self.driver.quit()
 
-    def test_create_user_ascii(self):
+    def foo_test_create_user_ascii(self):
         main_page = aa_page.CreateUser(self.driver)
         main_page.click_sign_in()
         main_page.click_create_account()
@@ -263,7 +284,7 @@ class IMDB_User_login(unittest.TestCase):
         time.sleep(20)
         self.assertEqual(self.driver.current_url, "https://www.imdb.com/ap/cvf/verify")
 
-    def test_create_user_chr(self):
+    def foo_test_create_user_chr(self):
         main_page = aa_page.CreateUser(self.driver)
         main_page.click_sign_in()
         main_page.click_create_account()
@@ -276,7 +297,7 @@ class IMDB_User_login(unittest.TestCase):
 
 if __name__ == '__main__':
     test_suite = unittest.TestSuite()
-    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(IMDBTest))
+    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(IMDB_Home_Page_test))
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(test_IMBD_Nav))
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(test_imdb_menu))
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(test_Awards_and_Events_Oscars))

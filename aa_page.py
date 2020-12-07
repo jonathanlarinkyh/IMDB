@@ -1,12 +1,13 @@
+import random
+import string
 import time
 
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
-import random, string
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
 
 # User Generator
 letters = [random.choice(string.ascii_lowercase) for l in
@@ -36,6 +37,12 @@ class PageObject:
     def click_backspace(self):
         self.driver.find_element_by_tag_name("html").send_keys(Keys.BACK_SPACE)
 
+    def click_back_page(self):
+        self.driver.back()
+
+    def click_forward_page(self):
+        self.driver.forward()
+
     def page_whole_down(self):
         for page in range(0, 8):
             self.driver.find_element_by_tag_name("html").send_keys(Keys.PAGE_DOWN)
@@ -59,6 +66,9 @@ class PageObject:
     def find_element_visible_element_by_link_text(self, selector, wait=0):
         return WebDriverWait(self.driver, wait).until(EC.visibility_of_element_located((By.LINK_TEXT, selector)))
 
+    def find_element_wait_for_element_by_xpath(self, selector, wait=0):
+        return WebDriverWait(self.driver, wait).until(EC.element_to_be_clickable((By.XPATH, selector)))
+
 
 class IMDBMainPage(PageObject):
     def __init__(self, driver: webdriver.Chrome):
@@ -67,6 +77,16 @@ class IMDBMainPage(PageObject):
 
     def click_menu_dd(self):
         self.find_element_clickable_element_by_xpath("//label[contains(.,'Menu')]", wait=10).click()
+
+    def click_browse_trailers(self):
+        self.find_element_clickable_element_by_xpath("//a[normalize-space()='Browse trailers']", wait=10).click()
+
+    def click_top_picks(self):
+        self.find_element_clickable_element_by_xpath("//*[@id='__next']/main/div[2]/section/section/section/div[1]/ul/li[3]/span", wait=20).click()
+
+    def click_fan_favorite(self):
+        self.find_element_clickable_element_by_xpath("//h3[normalize-space()='Fan favorites']", wait=10).click()
+
 
 
 class CreateUser(PageObject):
