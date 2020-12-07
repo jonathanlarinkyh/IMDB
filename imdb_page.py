@@ -61,6 +61,24 @@ class PageObject:
         return WebDriverWait(self.driver, wait).until(EC.element_to_be_clickable((By.XPATH, selector)))
 
 
+class IMDBMainPage(PageObject):
+    def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
+        self.driver = driver
+
+    def click_menu_dd(self):
+        self.find_element_clickable_element_by_xpath("//label[contains(.,'Menu')]", wait=10).click()
+
+    def click_browse_trailers(self):
+        self.find_element_clickable_element_by_xpath("//a[normalize-space()='Browse trailers']", wait=10).click()
+
+    def click_top_picks(self):
+        self.find_element_clickable_element_by_xpath("//*[@id='__next']/main/div[2]/section/section/section/div[1]/ul/li[3]/span", wait=20).click()
+
+    def click_fan_favorite(self):
+        self.find_element_clickable_element_by_xpath("//h3[normalize-space()='Fan favorites']", wait=10).click()
+
+
 class Menu(PageObject):
 
     def __init__(self, driver: webdriver.Chrome):
