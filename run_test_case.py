@@ -1,5 +1,5 @@
 import unittest
-from Amaj_Script import test_IMBD_Nav, test_Awards_and_Events_Oscars, test_imdb_menu, IMDB_User_login
+from Amaj_Script import IMDB_Home_Page_test, test_IMBD_Nav, test_Awards_and_Events_Oscars, test_imdb_menu, IMDB_User_login
 from Chris_script import IMDBCelebsTVShows
 from Jonathan_script import IMDBPageMenu, IMDBReleaseCalendar, IMDBDVDnBlueRayReleases
 from Victor_Script import IMDBWhatToWatchTestCase, IMDBNavTestCase
@@ -14,6 +14,7 @@ if __name__ == '__main__':
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(IMDBCelebsTVShows))
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(IMDBWhatToWatchTestCase))
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(IMDBNavTestCase))
+    test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(IMDB_Home_Page_test))
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(test_IMBD_Nav))
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(test_imdb_menu))
     test_suite.addTest(unittest.TestLoader().loadTestsFromTestCase(test_Awards_and_Events_Oscars))
