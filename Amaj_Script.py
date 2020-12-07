@@ -17,6 +17,8 @@ def webdriver_chrome():
     driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(10)
     driver.maximize_window()
+    driver.back()
+    driver.forward()
     return driver
 
 
@@ -25,6 +27,8 @@ def webdriver_chrome_headless():
     driver = webdriver.Chrome(options=options)
     driver.set_window_size(1920, 1080)
     driver.implicitly_wait(10)
+    driver.back()
+    driver.forward()
     return driver
 
 
@@ -37,6 +41,38 @@ def webdriver_factory():
         return webdriver_chrome()
 
 
+class IMDB_Home_Page_test(unittest.TestCase):
+
+    def __init__(self, methodName: str = ...):
+        super().__init__(methodName)
+
+    def setUp(self):
+        self.driver = webdriver_chrome()
+        self.driver.get("https://www.imdb.com/?ref_=nv_home")
+
+    def foo_test_home_page(self):
+        main_page = aa_page.IMDBMainPage(self.driver)
+        main_page.page_down()
+        main_page.page_whole_down()
+        main_page.page_whole_up()
+        main_page.click_browse_trailers()
+        main_page.page_whole_down()
+        main_page.page_whole_up()
+        main_page.click_back_page()
+
+    def test_home_top_picks(self):
+        main_page = aa_page.IMDBMainPage(self.driver)
+        main_page.page_down()
+        main_page.click_fan_favorite()
+        main_page.page_whole_down()
+        main_page.page_whole_up()
+        main_page.click_top_picks()
+        main_page.page_down()
+        main_page.page_down()
+        main_page.click_back_page()
+        main_page.click_back_page()
+        
+        
 class test_IMBD_Nav(unittest.TestCase):
     base_url = "https://www.imdb.com"
 
