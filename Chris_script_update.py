@@ -66,9 +66,6 @@ class IMDBCelebs(unittest.TestCase):
         main_page = imdb_page.CelebsBornToday(self.driver)
         menu = imdb_page.Menu(self.driver)
         menu.click_menu_dd()
-        # wait = WebDriverWait(self.driver, 10)
-        # element = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "Born Today")))
-        # element.click()
         main_page.click_born_today()
         self.assertEqual(self.driver.current_url, IMDBCelebs.targetURL1)
 
@@ -86,9 +83,8 @@ class IMDBCelebs(unittest.TestCase):
         menu.click_menu_dd()
         main_page.click_most_popular()
         main_page.click_birth_date()
-        for i in range(15):
-            main_page.page_down()
         self.assertEqual(self.driver.current_url, IMDBCelebs.targetURL3)
+
 
     def test_celebs_most_popular_death(self):
         main_page = imdb_page.CelebsMostPopular(self.driver)
@@ -96,7 +92,7 @@ class IMDBCelebs(unittest.TestCase):
         menu.click_menu_dd()
         main_page.click_most_popular()
         main_page.click_death_date()
-        assert self.driver.find_element_by_xpath("//a[contains(.,'Death Date')]").text == "Death Date"
+        self.assertEqual(self.driver.current_url, "https://www.imdb.com/search/name/?gender=male,female&sort=death_date,asc&ref_=rlm")
 
     def test_celebs_celebrity_news(self):
         main_page = imdb_page.CelebsCelebrityNews(self.driver)
@@ -218,6 +214,8 @@ class IMDBTVshows(unittest.TestCase):
         main_page.click_searchfield()
         main_page.click_go()
         main_page.page_down()
+        main_page.page_down()
+        main_page.wait_for_it()
         assert self.driver.find_element_by_link_text("laser-ball").text == "laser-ball"
 
     def test_tvshows_browse_tvshow_bmovie(self):
@@ -275,7 +273,7 @@ class IMDBTVshows(unittest.TestCase):
 
 
 class IMDBCreate(unittest.TestCase):
-    targetURL8 = "https://www.imdb.com/ap/cvf/request?arb=e0a486c0-b469-4872-9ae7-f93c86bbd514"
+    targetURL8 = "https://www.imdb.com/ap/cvf/verify"
 
     def setUp(self):
         self.driver = webdriver_factory()
@@ -303,5 +301,5 @@ class IMDBCreate(unittest.TestCase):
         assert self.driver.find_element_by_xpath("//a[contains(text(),'Sign-In')]")
 
     def tearDown(self):
-        print("Tearing down test")
         self.driver.close()
+
