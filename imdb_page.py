@@ -400,9 +400,6 @@ class CreateUser(PageObject):
     def find_signin(self):
         self.driver.find_element_by_xpath("//*[@id='cvf-page-content']/div/div")
 
-    def change_otp_method(self):
-        self.find_element_clickable_element_by_xpath("//a[normalize-space()='(Change)']", wait=10).click()
-
 
 class IMDBMenuWatch(PageObject):
     def __init__(self, driver: webdriver.Chrome):
