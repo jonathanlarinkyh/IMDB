@@ -275,7 +275,7 @@ class IMDBTVshows(unittest.TestCase):
 
 
 class IMDBCreate(unittest.TestCase):
-    targetURL8 = "https://www.imdb.com/ap/cvf/verify"
+    targetURL8 = "https://www.imdb.com/ap/cvf/request?arb=e0a486c0-b469-4872-9ae7-f93c86bbd514"
 
     def setUp(self):
         self.driver = webdriver_factory()

@@ -51,7 +51,7 @@ class IMDB_Home_Page_test(unittest.TestCase):
     def tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         name = 'screenshot-%s.png' % now
-        self.driver.get_screenshot_as_file(name)
+        self.driver.get_screenshot_as_file("Reports/" + name)
         print("Tearing Down Awards & Events_Section: Nav Test")
         self.driver.quit()
 
@@ -95,7 +95,7 @@ class test_IMBD_Nav(unittest.TestCase):
     def tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         name = 'screenshot-%s.png' % now
-        self.driver.get_screenshot_as_file(name)
+        self.driver.get_screenshot_as_file("Reports/" + name)
         print("Tearing Down Awards & Events_Section: Nav Test")
         self.driver.quit()
 
@@ -112,7 +112,7 @@ class test_imdb_menu(unittest.TestCase):
     def tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         name = 'screenshot-%s.png' % now
-        self.driver.get_screenshot_as_file(name)
+        self.driver.get_screenshot_as_file("Reports/" + name)
         print("Tearing Down Awards & Events_Menu Elements")
         self.driver.quit()
 
@@ -216,8 +216,8 @@ class test_Awards_and_Events_Oscars(unittest.TestCase):
 
     def tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        name = 'screenshot-%s.png' % now
-        self.driver.get_screenshot_as_file(name)
+        name = 'Reports/screenshot-%s.png' % now
+        self.driver.get_screenshot_as_file("Reports/" + name)
         print("Tearing Down Awards & Events_Section: Oscar")
         self.driver.quit()
 
@@ -249,7 +249,7 @@ class IMDB_User_login(unittest.TestCase):
     def tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         name = 'Reports/screenshot-%s.png' % now
-        self.driver.get_screenshot_as_file(name)
+        self.driver.get_screenshot_as_file("Reports/" + name)
         print("User Login Tearing Down")
         self.driver.quit()
 
