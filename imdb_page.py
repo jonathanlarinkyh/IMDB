@@ -6,7 +6,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 
 # User Generator
@@ -86,7 +85,6 @@ class IMDBMainPage(PageObject):
 
     def click_fan_favorite(self):
         self.find_element_clickable_element_by_xpath("//h3[normalize-space()='Fan favorites']", wait=10).click()
-
 
 
 class CreateUser(PageObject):
