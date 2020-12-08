@@ -191,13 +191,13 @@ class CelebsMostPopular(PageObject):
         self.driver.find_element_by_link_text("Most Popular Celebs").click()
 
     def click_birth_date(self):
-        self.find_element_clickable_element_by_xpath("//div[2]/a[3]", wait=5).click()
-
-    def click_clear_history(self):
-        self.driver.find_element_by_css_selector("#clear_rvi")
+        self.find_element_clickable_element_by_xpath("//div[2]/a[3]", wait=10).click()
 
     def click_death_date(self):
-        self.driver.find_element_by_xpath("//a[contains(.,'Death Date')]")
+        self.find_element_clickable_element_by_xpath("//a[contains(.,'Death Date')]", wait=10).click()
+
+    def wait_for_it(self):
+        self.find_element_clickable_element_by_xpath("//div[2]/a[3]", wait=10).click()
 
 
 class CelebsCelebrityNews(PageObject):
@@ -212,7 +212,7 @@ class CelebsCelebrityNews(PageObject):
         self.find_element_clickable_element_by_xpath("//button[@id='news-load-more']", wait=10).click()
 
     def click_indie_news(self):
-        self.find_element_clickable_element_by_xpath("//a[contains(.,'See All Indie News »')]").click()
+        self.find_element_clickable_element_by_xpath("//a[contains(.,'See All Indie News »')]", wait=10).click()
 
 
 class TvshowsWhatsOnTV(PageObject):
@@ -314,7 +314,10 @@ class TvshowsBrowseTvshows(PageObject):
         self.driver.find_element_by_xpath("//label[12]/input")
 
     def choose_year(self):
-        Select(self.driver.find_element_by_xpath("//select[@name='sort']")).select_by_visible_text("Year")
+        Select(self.find_visible_element_by_xpath("//select[@name='sort']", wait=10)).select_by_visible_text("Year")
+
+    def wait_for_it(self):
+        self.find_element_visible_element_by_link_text("laser-ball", wait=10)
 
 
 class TvshowsTvnews(PageObject):
@@ -386,7 +389,7 @@ class CreateUser(PageObject):
     def generate_password(self):
         self.driver.find_element_by_css_selector("#ap_password").send_keys(password)
         self.driver.find_element_by_css_selector("#ap_password_check").send_keys(password)
-        print("".join(password))
+        """print("".join(password))"""
 
     def create(self):
         self.driver.find_element_by_xpath("//input[@id='continue']").click()
