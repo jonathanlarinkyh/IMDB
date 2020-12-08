@@ -91,7 +91,19 @@ class test_IMBD_Nav(unittest.TestCase):
         self.driver.get("https://www.imdb.com")
 
     def test_page_access(self):
-        main_page = self.driver.get("https://imdb.com")
+        main_page = imdb_page.IMDB_menu_awards(self.driver)
+        main_page.click_menu_dd()
+        main_page.click_oscars()
+        main_page.click_menu_dd()
+        main_page.click_best_picture_Winner()
+        main_page.page_whole_down()
+        main_page.home_page()
+        main_page.page_whole_down()
+        main_page.page_whole_up()
+        main_page.click_menu_dd()
+        main_page.click_Emmys()
+        main_page.page_down()
+        main_page.home_page()
 
     def tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
