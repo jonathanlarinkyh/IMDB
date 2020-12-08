@@ -81,9 +81,6 @@ class IMDBMainPage(PageObject):
     def click_top_picks(self):
         self.find_element_clickable_element_by_xpath("//*[@id='__next']/main/div[2]/section/section/section/div[1]/ul/li[3]/span", wait=20).click()
 
-    def click_fan_favorite(self):
-        self.find_element_clickable_element_by_xpath("//h3[normalize-space()='Fan favorites']", wait=10).click()
-
 
 class Menu(PageObject):
 
@@ -543,4 +540,21 @@ class IMDB_Menu_Oscars(PageObject):
     def click_year_in_winners(self):
         self.find_element_clickable_element_by_xpath("//a[normalize-space()='2020']", wait=10).click()
 
-        time.sleep(5)
+
+class IMDB_menu_community(PageObject):
+
+    def __init__(self, driver: webdriver.Chrome):
+        super().__init__()
+        self.driver = driver
+
+    def click_menu_dd(self):
+        self.find_element_clickable_element_by_xpath("//label[contains(.,'Menu')]", wait=10).click()
+
+    def click_Help_center(self):
+        self.find_element_clickable_element_by_xpath("/html/body/div[1]/nav/div[2]/aside/div/div[2]/div/div[6]/span/div/div/ul/a[1]" , wait=10).click()
+
+    def click_contributor_zone(self):
+        self.find_element_clickable_element_by_xpath("/html/body/div[1]/nav/div[2]/aside/div/div[2]/div/div[6]/span/div/div/ul/a[2]" , wait=10).click()
+
+    def click_polls(self):
+        self.find_element_clickable_element_by_xpath("/html/body/div[1]/nav/div[2]/aside/div/div[2]/div/div[6]/span/div/div/ul/a[3]" , wait=10).click()

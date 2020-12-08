@@ -69,7 +69,6 @@ class IMDB_Home_Page_test(unittest.TestCase):
         main_page = imdb_page.IMDBMainPage(self.driver)
         main_page.page_down()
         main_page.page_down()
-        main_page.click_fan_favorite()
         main_page.page_whole_down()
         main_page.page_whole_up()
         main_page.click_top_picks()
