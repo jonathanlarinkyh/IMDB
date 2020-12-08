@@ -51,7 +51,7 @@ class IMDB_Home_Page_test(unittest.TestCase):
     def tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         name = 'screenshot-%s.png' % now
-        self.driver.get_screenshot_as_file("Reports/" + name)
+        self.driver.get_screenshot_as_file("reports/" + name)
         print("Tearing Down Awards & Events_Section: Nav Test")
         self.driver.quit()
 
@@ -67,6 +67,7 @@ class IMDB_Home_Page_test(unittest.TestCase):
 
     def test_home_top_picks(self):
         main_page = imdb_page.IMDBMainPage(self.driver)
+        main_page.page_down()
         main_page.page_down()
         main_page.click_fan_favorite()
         main_page.page_whole_down()
@@ -95,7 +96,7 @@ class test_IMBD_Nav(unittest.TestCase):
     def tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         name = 'screenshot-%s.png' % now
-        self.driver.get_screenshot_as_file("Reports/" + name)
+        self.driver.get_screenshot_as_file("reports/" + name)
         print("Tearing Down Awards & Events_Section: Nav Test")
         self.driver.quit()
 
@@ -112,7 +113,7 @@ class test_imdb_menu(unittest.TestCase):
     def tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         name = 'screenshot-%s.png' % now
-        self.driver.get_screenshot_as_file("Reports/" + name)
+        self.driver.get_screenshot_as_file("reports/" + name)
         print("Tearing Down Awards & Events_Menu Elements")
         self.driver.quit()
 
@@ -216,8 +217,8 @@ class test_Awards_and_Events_Oscars(unittest.TestCase):
 
     def tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        name = 'Reports/screenshot-%s.png' % now
-        self.driver.get_screenshot_as_file("Reports/" + name)
+        name = 'screenshot-%s.png' % now
+        self.driver.get_screenshot_as_file("reports/" + name)
         print("Tearing Down Awards & Events_Section: Oscar")
         self.driver.quit()
 
@@ -248,8 +249,8 @@ class IMDB_User_login(unittest.TestCase):
 
     def tearDown(self):
         now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        name = 'Reports/screenshot-%s.png' % now
-        self.driver.get_screenshot_as_file("Reports/" + name)
+        name = 'screenshot-%s.png' % now
+        self.driver.get_screenshot_as_file("reports/" + name)
         print("User Login Tearing Down")
         self.driver.quit()
 
