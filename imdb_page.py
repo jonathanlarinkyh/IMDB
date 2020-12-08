@@ -74,6 +74,9 @@ class IMDBMainPage(PageObject):
         super().__init__()
         self.driver = driver
 
+    def home_page(self):
+        self.find_element_clickable_element_by_xpath("//a[@id='home_img_holder']", wait=10).click()
+
     def click_menu_dd(self):
         self.find_element_clickable_element_by_xpath("//label[contains(.,'Menu')]", wait=10).click()
 
@@ -133,6 +136,9 @@ class IMDB_menu_awards(PageObject):
     def __init__(self, driver: webdriver.Chrome):
         super().__init__()
         self.driver = driver
+
+    def home_page(self):
+        self.find_element_clickable_element_by_xpath("//a[@id='home_img_holder']", wait=10).click()
 
     def click_menu_dd(self):
         self.find_element_clickable_element_by_xpath("//label[contains(.,'Menu')]", wait=10).click()
