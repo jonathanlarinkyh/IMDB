@@ -91,7 +91,7 @@ class test_IMBD_Nav(unittest.TestCase):
         self.driver.get("https://www.imdb.com")
 
     def test_page_access(self):
-        main_page = imdb_page.IMDB_menu_awards(self.driver)
+        main_page = imdb_page.IMDB_menu_awards_and_events(self.driver)
         main_page.click_menu_dd()
         main_page.click_oscars()
         main_page.click_menu_dd()
@@ -284,3 +284,4 @@ class IMDB_User_login(unittest.TestCase):
         main_page.generate_name_email_chr()
         main_page.generate_password()
         main_page.create()
+        assert self.driver.find_element_by_xpath("//a[contains(text(),'Sign-In')]")

@@ -1,5 +1,5 @@
 import unittest
-from Amaj_Script import test_IMBD_Nav, test_Awards_and_Events_Oscars, test_imdb_menu, IMDB_User_login,IMDB_Home_Page_test
+from Amaj_Script import test_IMBD_Nav, test_Awards_and_Events_Oscars, test_imdb_menu, IMDB_User_login, IMDB_Home_Page_test
 from Chris_script_update import IMDBTVshows, IMDBCreate, IMDBCelebs
 from Jonathan_script import IMDBPageMenu, IMDBReleaseCalendar, IMDBDVDnBlueRayReleases
 from Victor_Script import IMDBWhatToWatchTestCase, IMDBNavTestCase

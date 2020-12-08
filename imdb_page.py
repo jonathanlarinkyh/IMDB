@@ -406,9 +406,6 @@ class IMDBMenuWatch(PageObject):
         super().__init__()
         self.driver = driver
 
-    def click_home(self):
-        self.driver.find_element_by_xpath("(//a[contains(@href, '/?ref_=nv_home')])[2]").click()
-
     def click_dd_menu(self):
         self.find_element_clickable_element_by_xpath("//label[@id='imdbHeader-navDrawerOpen--desktop']", wait=10).click()
 
@@ -458,7 +455,7 @@ class IMDB_menu_awards_and_events(PageObject):
         super().__init__()
         self.driver = driver
 
-           def home_page(self):
+    def home_page(self):
         self.find_element_clickable_element_by_xpath("//a[@id='home_img_holder']", wait=10).click()
 
     def click_menu_dd(self):
