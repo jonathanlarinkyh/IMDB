@@ -122,7 +122,11 @@ class IMDBCelebs(unittest.TestCase):
         assert self.driver.find_element_by_xpath("//h3[contains(.,'Recently Viewed')]").text == "Recently Viewed"
 
     def tearDown(self):
-        self.driver.close()
+        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        name = 'Reports/screenshot-%s.png' % now
+        self.driver.get_screenshot_as_file(name)
+        print("Tearing Down Celebs")
+        self.driver.quit()
 
 
 class IMDBTVshows(unittest.TestCase):
@@ -269,7 +273,11 @@ class IMDBTVshows(unittest.TestCase):
         assert self.driver.find_element_by_xpath("//a[contains(text(),'Press Room')]").text == "Press Room"
 
     def tearDown(self):
-        self.driver.close()
+        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        name = 'Reports/screenshot-%s.png' % now
+        self.driver.get_screenshot_as_file(name)
+        print("Tearing Down Tvshows")
+        self.driver.quit()
 
 
 class IMDBCreate(unittest.TestCase):
@@ -301,5 +309,9 @@ class IMDBCreate(unittest.TestCase):
         assert self.driver.find_element_by_xpath("//a[contains(text(),'Sign-In')]")
 
     def tearDown(self):
-        self.driver.close()
+        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        name = 'Reports/screenshot-%s.png' % now
+        self.driver.get_screenshot_as_file(name)
+        print("Tearing Down Create")
+        self.driver.quit()
 
